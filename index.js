@@ -25,9 +25,11 @@ app.use(
 
 //import routes here
 const homeRoutes = require('./routes/home')
+const mousesRoutes = require('./routes/mouses')
 
 async function main() {
     app.use('/', homeRoutes)
+    app.use('/mouses', mousesRoutes)
   
 }
 
