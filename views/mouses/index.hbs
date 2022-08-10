@@ -6,27 +6,37 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>Brand</th>
             <th>Cost</th>
             <th>Description</th>
+            <th></th>
         </tr>
 
     </thead>
     <tbody>
         {{#each mouses}}
-            <tr>
-                <td>
-                    {{this.id}}
-                </td>
-                <td>
-                    {{this.name}}
-                </td>
-                <td>
-                    {{this.cost}}
-                </td>
-                <td>
-                    {{this.description}}
-                </td>
-            </tr>
+        <tr>
+            <td>
+                {{this.id}}
+            </td>
+            <td>
+                {{this.name}}
+            </td>
+            <td>
+                {{this.brand.name}}
+                <img src="{{this.brand.image_url}}" width='50'/>
+            </td>
+            <td>
+                {{this.cost}}
+            </td>
+            <td>
+                {{this.description}}
+            </td>
+            <td>
+                <a href="/mouses/{{this.id}}/update" class="btn btn-primary btn-sm">Update</a>
+                <a href="/mouses/{{this.id}}/delete" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
         {{/each}}
     </tbody>
 </table>
