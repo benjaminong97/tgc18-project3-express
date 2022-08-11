@@ -92,4 +92,44 @@ const createMouseForm = (brands) => {
     })
 };
 
-module.exports = { createMouseForm, bootstrapField };
+const createRegistrationForm = () => {
+    return forms.create({
+        'first_name' : fields.string({
+            required: true,
+            errorAfterField: true
+        }),
+        'last_name': fields.string({
+            required: true,
+            errorAfterField: true
+        }),
+        'email' : fields.string({
+            required: true,
+            errorAfterField: true
+        }),
+        'password': fields.password({
+            required: true,
+            errorAfterField: true
+        }),
+        'confirm_password': fields.password({
+            required: true,
+            errorAfterField: true,
+            validators: [validators.matchField('password')]
+        })
+        
+    })
+}
+
+const createLoginForm = () => {
+    return forms.create({
+        'email': fields.string({
+            required: true,
+            errorAfterField : true, 
+        }),
+        'password' : fields.password({
+            required: true,
+            errorAfterField: true
+        })
+    })
+}
+
+module.exports = { createMouseForm, bootstrapField, createLoginForm, createRegistrationForm};

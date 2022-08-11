@@ -14,4 +14,8 @@ const Brand = bookshelf.model('Brand', {
     }
 })
 
-module.exports = { Mouse, Brand };
+const User = bookshelf.model('User', {
+    tableName: 'users'
+})
+
+module.exports = { Mouse, Brand, User };

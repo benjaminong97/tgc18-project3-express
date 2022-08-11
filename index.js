@@ -45,10 +45,12 @@ app.use(function(req,res,next) {
 //import routes here
 const homeRoutes = require('./routes/home')
 const mousesRoutes = require('./routes/mouses')
+const usersRoutes = require('./routes/users')
 
 async function main() {
     app.use('/', homeRoutes)
     app.use('/mouses', mousesRoutes)
+    app.use('/users', usersRoutes)
   
 }
 

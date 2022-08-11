@@ -54,6 +54,9 @@ router.post('/create', async(req,res)=>{
             // mouse.set('connectivity', form.data.connectivity)
             // mouse.set('shape', form.data.shape)
             await mouse.save();
+
+            req.flash('success_messages', `New Mouse: ${mouse.get('name')} has been created!`)
+
             res.redirect('/mouses');
 
         },
