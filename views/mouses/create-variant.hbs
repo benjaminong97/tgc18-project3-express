@@ -1,0 +1,17 @@
+{{#extends 'base'}}
+{{#block 'content'}}
+<div class="container.fluid">
+    <h3>Creating Variant for "{{mouse.name}}"</h3>
+    <form method="POST" class="mx-auto">
+        {{{variantForm}}}
+    </form>
+    <br/>
+    <div>
+        <input type = "submit" value="Create Variant" class="btn btn-dark btn-sm" />
+    </div>
+
+
+</div>
+
+{{/block}}
+{{/extends}}

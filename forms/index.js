@@ -132,4 +132,27 @@ const createLoginForm = () => {
     })
 }
 
-module.exports = { createMouseForm, bootstrapField, createLoginForm, createRegistrationForm};
+const createVariantForm = (colors) => {
+    return forms.create({
+        'stock' : fields.number({
+            required: true,
+            errorAfterField: true
+        }),
+        'image_url' : fields.string({
+            
+        }),
+        'thumbnail_image_url' : fields.string({
+            
+        }),
+        'color_id': fields.string({
+            label: 'Color',
+            required: true,
+            errorAfterField: true,
+            widget : widgets.select(),
+            choices : colors
+        })
+
+    })
+}
+
+module.exports = { createMouseForm, bootstrapField, createLoginForm, createRegistrationForm, createVariantForm};

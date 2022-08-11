@@ -3,12 +3,15 @@ const router = express.Router();
 
 
 // #1 import in the mouse model
-const {Mouse, Brand} = require('../models');
+const {Mouse, Brand, Variant, Color} = require('../models');
 const { route } = require("./home");
 
 //import in forms
-const { bootstrapField, createMouseForm } = require('../forms');
+const { bootstrapField, createMouseForm, createVariantForm } = require('../forms');
 const async = require("hbs/lib/async");
+
+
+// PRODUCTS
 
 router.get('/', async (req,res)=>{
     // #2 - fetch all the mouses (ie, SELECT * from mouses)
@@ -104,6 +107,8 @@ router.get('/:mouse_id/update', async(req,res) => {
     })
 })
 
+
+
 router.post('/:mouse_id/update', async (req,res) => {
     // get all brands
     const allBrands = await Brand.fetchAll().map((brand) => {
@@ -158,6 +163,47 @@ router.post('/:mouse_id/delete', async(req,res) => {
     res.redirect('/mouses')
 })
 
+// PRODUCT VARIANTS 
+router.get('/:mouse_id/variants/create', async (req, res) => {
+    const mouse = await Mouse.where({
+        'id' : req.params.mouse_id
+    }).fetch({
+        require: true
+    })
+
+    const allColors = await Color.fetchAll().map((color) => {
+        return [color.get('id'), color.get('name')]
+    })
+
+    const variantForm = createVariantForm(allColors)
+
+    res.render('mouses/create-variant', {
+        mouse: mouse.toJSON(),
+        variantForm: variantForm.toHTML(bootstrapField)
+    })
+})
+
+router.post('/:mouse_id/variants/create', async (req,res) => {
+    const mouse =  await Mouse.where({
+        'id' : req.params.mouse_id
+    }).fetch({
+        require: true
+    })
+
+    const allColors = await Color.fetchAll().map((color) => {
+        return [color.get('id'), color.get('name')]
+    })
+
+    const variantForm = createVariantForm(allColors)
+
+    variantForm.handle(req, {
+        'success': async (form) => {
+            const variant = new Variant({
+                mouse_id: 
+            })
+        }
+    })
+})
 
 
 module.exports = router;
