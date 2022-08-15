@@ -9,6 +9,9 @@
             <th>Brand</th>
             <th>Cost</th>
             <th>Description</th>
+            <th>Features</th>
+            <th>Game Type</th>
+            <th>Backlighting</th>
             <th></th>
         </tr>
 
@@ -27,7 +30,7 @@
             </td>
             <td>
                 {{this.brand.name}}
-                <img src="{{this.brand.image_url}}" width='50'/>
+                <img src="{{this.brand.image_url}}" width='50' />
             </td>
             <td>
                 {{this.cost}}
@@ -36,8 +39,20 @@
                 {{this.description}}
             </td>
             <td>
+                {{#each this.features}}
+                <span class="badge bg-secondary">{{this.name}}</span>
+                {{/each}}
+            </td>
+            <td>
+                {{this.gameType.name}}
+            </td>
+            <td>
+                {{this.backlighting.name}}
+            </td>
+            <td>
                 <a href="/mouses/{{this.id}}/update" class="btn btn-primary btn-sm">Update</a>
                 <a href="/mouses/{{this.id}}/delete" class="btn btn-danger btn-sm">Delete</a>
+                <a href="/mouses/{{this.id}}/variant" class="btn btn-secondary btn-sm">Details</a>
             </td>
         </tr>
         {{/each}}

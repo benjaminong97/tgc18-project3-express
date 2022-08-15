@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const dataLayer = require('../dal/mouses')
 
 
 // #1 import in the mouse model
-const {Mouse, Brand, Variant, Color} = require('../models');
+const {Mouse, Brand, Variant, Color, Feature, Backlighting, GameType} = require('../models');
 const { route } = require("./home");
 
 //import in forms
@@ -11,12 +12,14 @@ const { bootstrapField, createMouseForm, createVariantForm } = require('../forms
 const async = require("hbs/lib/async");
 
 
+
+
 // PRODUCTS
 
 router.get('/', async (req,res)=>{
     // #2 - fetch all the mouses (ie, SELECT * from mouses)
     let mouses = await Mouse.collection().fetch({
-        withRelated:['brand']
+        withRelated:['brand', 'features', 'gameType', 'backlighting']
     });
     res.render('mouses/index', {
         'mouses': mouses.toJSON() // #3 - convert collection to JSON
@@ -24,39 +27,38 @@ router.get('/', async (req,res)=>{
 })
 
 router.get('/create', async(req,res) => {
-    const allBrands = await Brand.fetchAll().map((brand) => {
-        return [brand.get('id'), brand.get('name')]
-    })
+    // getting required form fields 
+const allBrands = await dataLayer.getAllBrands()
+const allFeatures = await dataLayer.getAllFeatures()
+const allBacklightings = await dataLayer.getAllBacklightings()
+const allGameTypes = await dataLayer.getAllGameTypes()
+    
 
-    const mouseForm = createMouseForm(allBrands)
+    const mouseForm = createMouseForm(allBrands, allFeatures, allBacklightings, allGameTypes)
     res.render('mouses/create', {
         'form' : mouseForm.toHTML(bootstrapField)
     })
+    
 })
 
 router.post('/create', async(req,res)=>{
-    // read in all the brands
-    const allBrands = await Brand.fetchAll().map((brand) => {
-        return [brand.get('id'), brand.get('name')]
-    })
+    // getting required form fields 
+const allBrands = await dataLayer.getAllBrands()
+const allFeatures = await dataLayer.getAllFeatures()
+const allBacklightings = await dataLayer.getAllBacklightings()
+const allGameTypes = await dataLayer.getAllGameTypes()
+    
 
-    const mouseForm = createMouseForm(allBrands);
+    const mouseForm = createMouseForm(allBrands, allFeatures, allBacklightings, allGameTypes);
     mouseForm.handle(req, {
         'success': async (form) => {
-            const mouse = new Mouse(form.data);
-            // mouse.set('name', form.data.name);
-            // mouse.set('cost', form.data.cost);
-            // mouse.set('description', form.data.description);
-            // mouse.set('weight', form.data.weight)
-            // mouse.set('features', form.data.features)
-            // mouse.set('backlighting', form.data.backlighting)
-            // mouse.set('height', form.data.height)
-            // mouse.set('width', form.data.width)
-            // mouse.set('length', form.data.length)
-            // mouse.set('numberOfButtons', form.data.numberOfButtons)
-            // mouse.set('connectivity', form.data.connectivity)
-            // mouse.set('shape', form.data.shape)
+            let {features, ...mouseData} = form.data
+            const mouse = new Mouse(mouseData);
             await mouse.save();
+
+            if (features) {
+                await mouse.features().attach(features.split(','))
+            }
 
             req.flash('success_messages', `New Mouse: ${mouse.get('name')} has been created!`)
 
@@ -72,23 +74,25 @@ router.post('/create', async(req,res)=>{
 })
 
 router.get('/:mouse_id/update', async(req,res) => {
+// getting required form fields 
+const allBrands = await dataLayer.getAllBrands()
+const allFeatures = await dataLayer.getAllFeatures()
+const allBacklightings = await dataLayer.getAllBacklightings()
+const allGameTypes = await dataLayer.getAllGameTypes()
+
     const mouseId = req.params.mouse_id
     const mouse = await Mouse.where({
         'id' : mouseId
     }).fetch({
-        require: true
+        require: true,
+        withRelated:['features']
     })
-
-    //fetch all brands
-    const allBrands = await Brand.fetchAll().map((brand) => {
-        return [brand.get('id'), brand.get('name')]
-    })
-    const mouseForm = createMouseForm(allBrands)
+    
+    const mouseForm = createMouseForm(allBrands, allFeatures, allBacklightings, allGameTypes)
     mouseForm.fields.name.value = mouse.get('name')
     mouseForm.fields.cost.value = mouse.get('cost')
     mouseForm.fields.description.value = mouse.get('description')
     mouseForm.fields.features.value = mouse.get('features')
-    mouseForm.fields.backlighting.value = mouse.get('backlighting')
     mouseForm.fields.height.value = mouse.get('height')
     mouseForm.fields.width.value = mouse.get('width')
     mouseForm.fields.length.value = mouse.get('length')
@@ -98,6 +102,11 @@ router.get('/:mouse_id/update', async(req,res) => {
     mouseForm.fields.shape.value = mouse.get('shape')
     mouseForm.fields.weight.value = mouse.get('weight')
     mouseForm.fields.brand_id.value = mouse.get('brand_id')
+    mouseForm.fields.gameType_id.value = mouse.get('gameType_id')
+    mouseForm.fields.backlighting_id.value = mouse.get('backlighting_id')
+
+    let selectedFeatures = await product.related('features').pluck('id')
+    mouseForm.fields.features.value=selectedFeatures
 
 
     res.render('mouses/update', {
@@ -110,24 +119,42 @@ router.get('/:mouse_id/update', async(req,res) => {
 
 
 router.post('/:mouse_id/update', async (req,res) => {
-    // get all brands
-    const allBrands = await Brand.fetchAll().map((brand) => {
-        return [brand.get('id'), brand.get('name')]
-    })
+    // getting required form fields 
+const allBrands = await dataLayer.getAllBrands()
+const allFeatures = await dataLayer.getAllFeatures()
+const allBacklightings = await dataLayer.getAllBacklightings()
+const allGameTypes = await dataLayer.getAllGameTypes()
 
     //fetch the nouse to be updated
     const mouse = await Mouse.where({
         'id': req.params.mouse_id
     }).fetch({
-        require: true
+        require: true,
+        withRelated:['features', 'brand', 'gameType', 'backlighting']
     })
 
     //process form
-    const mouseForm = createMouseForm(allBrands)
+    const mouseForm = createMouseForm(allBrands, allFeatures, allBacklightings, allGameTypes)
     mouseForm.handle(req, {
         'success': async (form) => {
-            mouse.set(form.data);
+            let {features, ...mouseData} = form.data;
+            
+
+
+            mouse.set(mouseData);
             mouse.save();
+            let featureIds = features.split(',')
+            let existingFeatureIds = await mouse.related('features').pluck('id')
+
+            // remove all features that arent selected
+            let toRemove = existingFeatureIds.filter( feature => featureIds.includes(feature) === false)
+
+            await mouse.features().detach(toRemove)
+
+            await mouse.features().attach(featureIds)
+
+
+
             res.redirect('/mouses');
         },
         'error' : async(form) => {
@@ -164,6 +191,20 @@ router.post('/:mouse_id/delete', async(req,res) => {
 })
 
 // PRODUCT VARIANTS 
+router.get('/:mouse_id/variants', async (req,res) => {
+    const mouse = await Mouse.where({
+        'id' : req.params.mouse_id
+    }).fetch({
+        require: true,
+        withRelated: ['brand', 'features']
+    })
+
+    res.render('mouses/variants', {
+        mouse: mouse.toJSON()
+    })
+})
+
+
 router.get('/:mouse_id/variants/create', async (req, res) => {
     const mouse = await Mouse.where({
         'id' : req.params.mouse_id
@@ -196,10 +237,28 @@ router.post('/:mouse_id/variants/create', async (req,res) => {
 
     const variantForm = createVariantForm(allColors)
 
+    
+
     variantForm.handle(req, {
         'success': async (form) => {
+            let variantData = form.data
             const variant = new Variant({
-                mouse_id: 
+                mouse_id: req.params.mouse_id,
+                image_url: variantData.image_url,
+                stock : variantData.stock,
+                thumbnail_image_url: variantData.thumbnail_image_url,
+                color_id : variantData.color_id
+            })
+            await variant.save()
+
+            req.flash('success_messages', 'New Product Variant has been created!')
+
+            res.redirect(`/mouses`)
+        },
+        'error': async(form) => {
+            res.render('/mouses/create-variant', {
+                mouse: mouse.toJSON(),
+                variantForm: form.toHTML(bootstrapField)
             })
         }
     })

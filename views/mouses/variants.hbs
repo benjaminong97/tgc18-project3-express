@@ -1,0 +1,37 @@
+{{#extends 'base'}}
+
+{{#block 'content'}}
+<h1>{{mouse.name}}</h1>
+<div class="container-fluid">
+    <div class="h-100 p-3 d-flex flex-column justify-content-center">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Mouse ID</th>
+                    <th>Mouse Name</th>
+                    <th>Description</th>
+                    <th>Cost</th>
+                    <th>Backlighting</th>
+                    <th>Number of Buttons</th>
+                    <th>Connectivity</th>
+                    <th>Height</th>
+                    <th>Width</th>
+                    <th>Length</th>
+                    <th>Shape</th>
+                    <th>Brand</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{{#each variants}}
+
+{{/each}}
+
+{{/block}}
+
+{{/extends}}

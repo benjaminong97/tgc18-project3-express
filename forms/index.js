@@ -25,7 +25,7 @@ var bootstrapField = function (name, object) {
     return '<div class="form-group">' + label + widget + error + '</div>';
 };
 
-const createMouseForm = (brands) => {
+const createMouseForm = (brands, features, backlightings, gameTypes) => {
     return forms.create({
         'name': fields.string({
             required: true,
@@ -54,10 +54,7 @@ const createMouseForm = (brands) => {
             required: true,
             errorAfterField: true
         }),
-        'backlighting': fields.string({
-            required: true,
-            errorAfterField: true
-        }),
+        
         'height': fields.number({
             required: true,
             errorAfterField: true
@@ -88,6 +85,29 @@ const createMouseForm = (brands) => {
             errorAfterField: true,
             widget : widgets.select(),
             choices: brands
+        }),
+        'features': fields.string({
+            required: true,
+            errorAfterField: true,
+            widget: widgets.multipleSelect(),
+            choices: features
+        }),
+        'backlighting_id': fields.string({
+            label:'Backlighting',
+            required: true,
+            errorAfterField: true,
+            widget: widgets.select(),
+            choices: backlightings
+        }),
+        'gameType_id' :  fields.string({
+            label:'Game Type',
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.select(),
+            choices: gameTypes
         })
     })
 };

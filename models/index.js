@@ -7,6 +7,15 @@ const Mouse = bookshelf.model('Mouse', {
     },
     variant() {
         return this.belongsTo('Variant')
+    },
+    features() {
+        return this.belongsToMany('Feature')
+    },
+    backlighting() {
+        return this.belongsTo('Backlighting')
+    },
+    gameType() {
+        return this.belongsTo('GameType')
     }
 });
 
@@ -38,4 +47,25 @@ const Color = bookshelf.model('Colors', {
     }
 })
 
-module.exports = { Mouse, Brand, User, Variant, Color };
+const Feature = bookshelf.model('Feature', {
+    tableName: 'features', 
+    mouses() {
+        return this.belongsToMany('Mouse')
+    }
+})
+
+const Backlighting = bookshelf.model('Backlighting', {
+    tableName: 'backlightings',
+    mouses() {
+        return this.hasMany("Mouse")
+    }
+})
+
+const GameType = bookshelf.model('GameType', {
+    tableName: 'gameTypes',
+    mouses() {
+        return this.hasMany('Mouse')
+    }
+})
+
+module.exports = { Mouse, Brand, User, Variant, Color, Feature, Backlighting, GameType};
