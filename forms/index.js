@@ -82,7 +82,13 @@ const createMouseForm = (brands, features, backlightings, gameTypes) => {
         }),
         'shape' : fields.string({
             required : true,
-            errorAfterField : true
+            errorAfterField : true,
+            widget : widgets.select(),
+            choices: {
+                'ambidextrous' : "Ambidextrous",
+                'rightHanded' : 'Right-Handed',
+                'leftHanded' : 'Left-Handed'
+            }
         }),
         'brand_id': fields.string({
             label: "Brand",
@@ -164,7 +170,7 @@ const createVariantForm = (colors) => {
             errorAfterField: true
         }),
         'image_url' : fields.string({
-            
+            widget: widgets.hidden()
         }),
         'thumbnail_image_url' : fields.string({
             
@@ -180,4 +186,82 @@ const createVariantForm = (colors) => {
     })
 }
 
-module.exports = { createMouseForm, bootstrapField, createLoginForm, createRegistrationForm, createVariantForm};
+const createSearchForm = (brands, features, backlightings, gameTypes) => {
+    return forms.create({
+        'name': fields.string({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            }
+        }),
+        'min_cost': fields.string({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            'validators': [validators.integer()]
+        }),
+          'max_cost': fields.string({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            'validators': [validators.integer()]
+        }),
+        'brand_id' : fields.string({
+            required: false,
+            errorAfterField: true,
+            widget: widgets.select(),
+            choices: brands,
+            label: 'Brand'
+        }),
+        "features": fields.string({
+            required: false,
+            errorAfterField: true,
+            widget: widgets.multipleSelect(),
+            choices: features
+        }),
+        "gameType_id" : fields.string({
+            required: false,
+            errorAfterField: true,
+            widget: widgets.select(),
+            choices: gameTypes,
+            label: 'Game Type'
+        }),
+        "backlighting_id" : fields.string({
+            require: false,
+            errorAfterField: true,
+            widget: widgets.select(),
+            choices: backlightings,
+            label: "Backlighting"
+        }),
+        'connectivity' :fields.string({
+            require: false,
+            errorAfterField: true,
+            widget: widgets.select(),
+            choices: {
+                "wired": "Wired",
+                "wireless" : "Wireless"
+            }
+
+        }),
+        'shape' : fields.string({
+            required : false,
+            errorAfterField : true,
+            widget : widgets.select(),
+            choices: {
+                'ambidextrous' : "Ambidextrous",
+                'rightHanded' : 'Right-Handed',
+                'leftHanded' : 'Left-Handed'
+            }
+        }),
+    })
+}
+
+module.exports = { 
+    createMouseForm, bootstrapField, createLoginForm, 
+    createRegistrationForm, createVariantForm, createSearchForm
+};

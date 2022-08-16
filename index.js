@@ -6,6 +6,10 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const FileStore = require('session-file-store')(session)
 
+hbs.registerHelper('divide', function(leftValue, rightValue) {
+  return (leftValue / rightValue)
+ })
+
 // create an instance of express app
 let app = express();
 
@@ -46,11 +50,13 @@ app.use(function(req,res,next) {
 const homeRoutes = require('./routes/home')
 const mousesRoutes = require('./routes/mouses')
 const usersRoutes = require('./routes/users')
+const cloudinaryRoutes = require('./routes/cloudinary')
 
 async function main() {
     app.use('/', homeRoutes)
     app.use('/mouses', mousesRoutes)
     app.use('/users', usersRoutes)
+    app.use('/cloudinary', cloudinaryRoutes)
   
 }
 
