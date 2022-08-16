@@ -73,7 +73,12 @@ const createMouseForm = (brands, features, backlightings, gameTypes) => {
         }),
         'connectivity': fields.string({
             required: true,
-            errorAfterField: true
+            errorAfterField: true,
+            widget: widgets.select(),
+            choices: {
+                "wired": "Wired",
+                "wireless" : "Wireless"
+            }
         }),
         'shape' : fields.string({
             required : true,

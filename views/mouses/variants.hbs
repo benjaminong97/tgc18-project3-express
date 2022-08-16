@@ -6,7 +6,7 @@
     <div class="h-100 p-3 d-flex flex-column justify-content-center">
         <table class="table">
             <thead>
-                <tr>
+                {{!-- <tr>
                     <th>Mouse ID</th>
                     <th>Mouse Name</th>
                     <th>Description</th>
@@ -19,16 +19,90 @@
                     <th>Length</th>
                     <th>Shape</th>
                     <th>Brand</th>
-                </tr>
+                </tr> --}}
             </thead>
             <tbody>
-                <tr></tr>
+                <tr>
+                    <th>Mouse ID</th>
+                    <th>{{mouse.id}}</th>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <th>{{mouse.description}}</th>
+                </tr>
+                <tr>
+                    <th>Cost</th>
+                    <th>{{mouse.cost}}</th>
+                </tr>
+                <tr>
+                    <th>Game Type</th>
+                    <th>{{mouse.gameType.name}}</th>
+                </tr>
+                <tr>
+                    <th>Features</th>
+                    <th>{{#each mouse.features}}
+                        <span class="badge bg-secondary">{{this.name}}</span>
+                        {{/each}}
+                    </th>
+                </tr>
+                <tr>
+                    <th>Number of Buttons</th>
+                    <th>{{mouse.numberOfButtons}}</th>
+                </tr>
+                <tr>
+                    <th>Backlighting</th>
+                    <th>{{mouse.backlighting.name}}</th>
+                </tr>
+                <tr>
+                    <th>Connectivity</th>
+                    <th>{{mouse.connectivity}}</th>
+                </tr>
+                <tr>
+                    <th>Height</th>
+                    <th>{{mouse.height}}</th>
+                </tr>
+                <tr>
+                    <th>Width</th>
+                    <th>{{mouse.width}}</th>
+                </tr>
+                <tr>
+                    <th>Length</th>
+                    <th>{{mouse.length}}</th>
+                </tr>
+                <tr>
+                    <th>Shape</th>
+                    <th>{{mouse.shape}}</th>
+                </tr>
+                <tr>
+                    <th>Brand</th>
+                    <th>{{mouse.brand.name}}</th>
+                </tr>
+
             </tbody>
         </table>
+        <a href="/mouses/{{mouse.id}}/variants/create" class="btn btn-secondary btn-fluid">Create Variant</a>
     </div>
 </div>
+<br/>
 
-{{#each variants}}
+
+{{#each variant}}
+<div class="d-flex">
+<div class="card mb-3" style="max-width: 540px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{this.image_url}}" class="img-fluid rounded-start" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{this.color.name}}</h5>
+        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 
 {{/each}}
 

@@ -21,7 +21,7 @@ const Mouse = bookshelf.model('Mouse', {
 
 const Brand = bookshelf.model('Brand', {
     tableName: 'brands',
-    brands() {
+    mouses() {
         return this.hasMany('Mouse')
     }
 })
@@ -40,10 +40,10 @@ const Variant = bookshelf.model('Variant', {
     }
 })
 
-const Color = bookshelf.model('Colors', {
+const Color = bookshelf.model('Color', {
     tableName: 'colors',
     variants() {
-        return this.hasMany('variants')
+        return this.hasMany('Variant')
     }
 })
 

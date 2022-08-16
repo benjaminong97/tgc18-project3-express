@@ -195,12 +195,18 @@ router.get('/:mouse_id/variants', async (req,res) => {
     const mouse = await Mouse.where({
         'id' : req.params.mouse_id
     }).fetch({
-        require: true,
-        withRelated: ['brand', 'features']
+        withRelated: ['brand', 'features', 'gameType', 'backlighting']
+    })
+
+    const variant = await Variant.where({
+        'mouse_id' : req.params.mouse_id
+    }).fetchAll({
+        withRelated: ['mouse', 'color']
     })
 
     res.render('mouses/variants', {
-        mouse: mouse.toJSON()
+        mouse: mouse.toJSON(),
+        variant: variant.toJSON()
     })
 })
 
@@ -253,7 +259,7 @@ router.post('/:mouse_id/variants/create', async (req,res) => {
 
             req.flash('success_messages', 'New Product Variant has been created!')
 
-            res.redirect(`/mouses`)
+            res.redirect(`/mouses/${req.params.mouse_id}/variants`)
         },
         'error': async(form) => {
             res.render('/mouses/create-variant', {
