@@ -51,7 +51,7 @@ router.get('/login', (req,res) => {
     })
 })
 
-router.get('/login', async (req,res) => 
+router.post('/login', async (req,res) => 
 {
     const loginForm = createLoginForm()
     loginForm.handle(req, {

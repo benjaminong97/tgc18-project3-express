@@ -3,6 +3,7 @@
 <div class="container.fluid">
     <h3>Creating Variant for "{{mouse.name}}"</h3>
     <form method="POST" class="mx-auto">
+      <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
         {{{variantForm}}}
         <br/>
     <div>

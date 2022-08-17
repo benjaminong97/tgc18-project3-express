@@ -12,6 +12,8 @@ const { route } = require("./home");
 const { bootstrapField, createMouseForm, createVariantForm, createSearchForm } = require('../forms');
 const async = require("hbs/lib/async");
 
+//import in middleware
+const {checkIfAuthenticated} = require('../middlewares')
 
 
 
@@ -79,15 +81,15 @@ router.get('/', async (req, res) => {
         }
         
         if(form.data.backlighting_id && form.data.backlighting_id != "0") {
-            q.where('brand_id', '=', 'form.data.backlighting_id')
+            q.where('brand_id', '=', form.data.backlighting_id)
         }
 
         if (form.data.gameType_id && form.data.gameType_id != '0') {
-            q.where('gameType_id', '=', 'form.data.gameType_id')
+            q.where('gameType_id', '=', form.data.gameType_id)
         }
 
         if (form.data.brand_id && form.data.brand_id != '0') {
-            q.where('brand_id', '=', 'form.data.brand_id')
+            q.where('brand_id', '=', form.data.brand_id)
         }
 
 
@@ -107,7 +109,7 @@ router.get('/', async (req, res) => {
     
 })
 
-router.get('/create', async (req, res) => {
+router.get('/create', checkIfAuthenticated, async (req, res) => {
     // getting required form fields 
     const allBrands = await dataLayer.getAllBrands()
     const allFeatures = await dataLayer.getAllFeatures()

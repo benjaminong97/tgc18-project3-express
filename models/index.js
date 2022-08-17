@@ -68,4 +68,11 @@ const GameType = bookshelf.model('GameType', {
     }
 })
 
-module.exports = { Mouse, Brand, User, Variant, Color, Feature, Backlighting, GameType};
+const Cart = bookshelf.model('Cart', {
+    tableName: "carts",
+    mouse() {
+        return this.belongsTo('Mouse')
+    }
+})
+
+module.exports = { Mouse, Brand, User, Variant, Color, Feature, Backlighting, GameType, Cart};

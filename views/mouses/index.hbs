@@ -2,68 +2,83 @@
 
 {{#block 'content'}}
 
-<form method="GET">
-   {{{form}}}
-    <input type="submit" class="mb-3 mt-3 btn btn-primary" value="Search"/>
-</form>
+<div class="container">
+    <h1>All Mouses</h1>
+    <div class="row">
+        <div>
+            <form method="GET">
+                {{{form}}}
+                <input type="submit" class="mb-3 mt-3 btn btn-primary" value="Search" />
+            </form>
+        </div>
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Brand</th>
+                        <th>Cost</th>
+                        <th>Description</th>
+                        <th>Features</th>
+                        <th>Game Type</th>
+                        <th>Backlighting</th>
+                        <th></th>
+                    </tr>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Brand</th>
-            <th>Cost</th>
-            <th>Description</th>
-            <th>Features</th>
-            <th>Game Type</th>
-            <th>Backlighting</th>
-            <th></th>
-        </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <a href="/mouses/create" class="btn btn-secondary btn-sm">Create New Mouse</a>
+                    </tr>
+                    {{#each mouses}}
+                    <tr>
+                        <td>
+                            {{this.id}}
+                        </td>
+                        <td>
+                            {{this.name}}
+                        </td>
+                        <td>
+                            {{this.brand.name}}
+                            <img src="{{this.brand.image_url}}" width='50' />
+                        </td>
+                        <td>
+                            {{divide this.cost 100}}
+                        </td>
+                        <td>
+                            {{this.description}}
+                        </td>
+                        <td>
+                            {{#each this.features}}
+                            <span class="badge bg-secondary">{{this.name}}</span>
+                            {{/each}}
+                        </td>
+                        <td>
+                            {{this.gameType.name}}
+                        </td>
+                        <td>
+                            {{this.backlighting.name}}
+                        </td>
+                        <td>
+                            <a href="/mouses/{{this.id}}/update" class="btn btn-primary btn-sm">Update</a>
+                            <a href="/mouses/{{this.id}}/delete" class="btn btn-danger btn-sm">Delete</a>
+                            <a href="/mouses/{{this.id}}/variants" class="btn btn-secondary btn-sm">Details</a>
+                            <a href="/cart/{{this.id}}/add" class="btn btn-success btn-sm">Add to cart</a>
+                
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
 
-    </thead>
-    <tbody>
-        <tr>
-            <a href="/mouses/create" class="btn btn-secondary btn-sm">Create New Mouse</a>
-        </tr>
-        {{#each mouses}}
-        <tr>
-            <td>
-                {{this.id}}
-            </td>
-            <td>
-                {{this.name}}
-            </td>
-            <td>
-                {{this.brand.name}}
-                <img src="{{this.brand.image_url}}" width='50' />
-            </td>
-            <td>
-                {{divide this.cost 100}}
-            </td>
-            <td>
-                {{this.description}}
-            </td>
-            <td>
-                {{#each this.features}}
-                <span class="badge bg-secondary">{{this.name}}</span>
-                {{/each}}
-            </td>
-            <td>
-                {{this.gameType.name}}
-            </td>
-            <td>
-                {{this.backlighting.name}}
-            </td>
-            <td>
-                <a href="/mouses/{{this.id}}/update" class="btn btn-primary btn-sm">Update</a>
-                <a href="/mouses/{{this.id}}/delete" class="btn btn-danger btn-sm">Delete</a>
-                <a href="/mouses/{{this.id}}/variants" class="btn btn-secondary btn-sm">Details</a>
-            </td>
-        </tr>
-        {{/each}}
-    </tbody>
-</table>
+    </div>
+</div>
+
+
+
+
 {{/block}}
 
 {{/extends}}

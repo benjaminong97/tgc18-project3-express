@@ -5,10 +5,13 @@
 <p>Please login with your account below!</p>
 
 <form method ='POST'>
+    <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
 {{{form}}}
 <br/>
 <input type = 'submit' class = 'btn btn-primary' value = "Login"/>
 </form>
+
+<a href="/users/register" class="btn btn-secondary">Register</a>
 {{/block}}
 
 {{/extends}}

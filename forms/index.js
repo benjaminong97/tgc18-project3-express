@@ -243,6 +243,7 @@ const createSearchForm = (brands, features, backlightings, gameTypes) => {
             errorAfterField: true,
             widget: widgets.select(),
             choices: {
+                '0' : '---',
                 "wired": "Wired",
                 "wireless" : "Wireless"
             }
@@ -253,6 +254,7 @@ const createSearchForm = (brands, features, backlightings, gameTypes) => {
             errorAfterField : true,
             widget : widgets.select(),
             choices: {
+                '0' : '---',
                 'ambidextrous' : "Ambidextrous",
                 'rightHanded' : 'Right-Handed',
                 'leftHanded' : 'Left-Handed'
