@@ -7,9 +7,9 @@ const flash = require('connect-flash')
 const FileStore = require('session-file-store')(session)
 const csrf = require('csurf')
 
-hbs.registerHelper('divide', function(leftValue, rightValue) {
+hbs.registerHelper('divide', function (leftValue, rightValue) {
   return (leftValue / rightValue)
- })
+})
 
 // create an instance of express app
 let app = express();
@@ -41,25 +41,35 @@ app.use(session({
 app.use(flash())
 
 //register flash middleware
-app.use(function(req,res,next) {
+app.use(function (req, res, next) {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
   next()
 })
 
-app.use(csrf())
+const csurfInstance = csrf();
+app.use(function (req, res, next) {
+  console.log("checking for csrf exclusion")
+  // exclude whatever url we want from CSRF protection
+  if (req.url === "/checkout/process_payment" || req.url.slice(0,5) == '/api/') {
+    return next();
+  }
+  csurfInstance(req, res, next);
+})
 
 app.use(function (err, req, res, next) {
   if (err && err.code == "EBADCSRFTOKEN") {
-      req.flash('error_messages', 'The form has expired. Please try again');
-      res.redirect('back');
+    req.flash('error_messages', 'The form has expired. Please try again');
+    res.redirect('back');
   } else {
-      next()
+    next()
   }
 });
 
-app.use(function(req, res, next) {
-  res.locals.csrfToken = req.csrfToken()
+app.use(function (req, res, next) {
+  if (req.csrfToken) {
+    res.locals.csrfToken = req.csrfToken();
+  }
   next()
 })
 
@@ -71,13 +81,22 @@ const mousesRoutes = require('./routes/mouses')
 const usersRoutes = require('./routes/users')
 const cloudinaryRoutes = require('./routes/cloudinary')
 const cartRoutes = require('./routes/shoppingCart')
+const checkoutRoutes = require('./routes/checkout')
+const api = {
+  mouses: require('./routes/api/mouses'),
+  users : require('./routes/api/users')
+
+}
 
 async function main() {
-    app.use('/', homeRoutes)
-    app.use('/mouses', mousesRoutes)
-    app.use('/users', usersRoutes)
-    app.use('/cloudinary', cloudinaryRoutes)
-    app.use('/cart', cartRoutes)
+  app.use('/', homeRoutes)
+  app.use('/mouses', mousesRoutes)
+  app.use('/users', usersRoutes)
+  app.use('/cloudinary', cloudinaryRoutes)
+  app.use('/cart', cartRoutes)
+  app.use('/checkout', checkoutRoutes)
+  app.use('/api/mouses', express.json(), api.mouses)
+  app.use('/api/users', api.users)
 }
 
 main();

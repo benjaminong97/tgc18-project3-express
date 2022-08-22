@@ -25,6 +25,10 @@ const getAllGameTypes = async() => {
     })
 }
 
+const getAllMouses = async () => {
+    return await Mouse.fetchAll()
+}
+
 module.exports = {
-    getAllBacklightings, getAllBrands, getAllFeatures, getAllGameTypes
+    getAllBacklightings, getAllBrands, getAllFeatures, getAllGameTypes, getAllMouses
 }

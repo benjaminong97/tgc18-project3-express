@@ -52,4 +52,26 @@ router.get('/', async (req,res) => {
 
 })
 
+router.post('/process_payment', express.raw({type: 'application/json'}), async (req, res) => {
+    let payload = req.body;
+    let endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
+    let sigHeader = req.headers["stripe-signature"];
+    let event;
+    try {
+        event = Stripe.webhooks.constructEvent(payload, sigHeader, endpointSecret);
+
+    } catch (e) {
+        res.send({
+            'error': e.message
+        })
+        console.log(e.message)
+    }
+    if (event.type == 'checkout.session.completed') {
+        let stripeSession = event.data.object;
+        console.log(stripeSession);
+        // process stripeSession
+    }
+    res.send({ received: true });
+})
+
 module.exports = router;
