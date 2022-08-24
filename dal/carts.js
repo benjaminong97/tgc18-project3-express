@@ -9,27 +9,29 @@ const getCart = async (userId) => {
     })
 }
 
-const getCartByUserAndMouse = async (userId, mouseId) => {
+const getCartByUserAndVariant = async (userId, variantId) => {
     return await Cart.where({
         'user_id' : userId,
-        'mouse_id' : mouseId
+        
+        'variant_id' : variantId
     }).fetch({
         require:false
     })
 }
 
-async function createCart(userId, mouseId, quantity) {
+async function createCart(userId, mouseId, variantId, quantity) {
     let cart = new Cart({
         'user_id' : userId,
         'mouse_id' : mouseId,
+        'variant_id' : variantId,
         'quantity': quantity
     })
     await cart.save()
     return cart
 }
 
-async function removeFromCart(userId, mouseId, newQuantity=0) {
-    let cart = await getCartByUserAndMouse(userId,mouseId);
+async function removeFromCart(userId, variantId) {
+    let cart = await getCartByUserAndVariant(userId, variantId);
     if (cart) {
         await cart.destroy()
         return true
@@ -37,8 +39,8 @@ async function removeFromCart(userId, mouseId, newQuantity=0) {
     return false
 }
 
-async function updateQuantity(userId, mouseId, newQuantity) {
-    let cart = await getCartByUserAndMouse(userId, mouseId)
+async function updateQuantity(userId,  variantId, newQuantity) {
+    let cart = await getCartByUserAndVariant(userId, variantId)
     if (cart) {
         cart.set('quantity', newQuantity)
         cart.save()
@@ -47,4 +49,4 @@ async function updateQuantity(userId, mouseId, newQuantity) {
     return false 
 }
 
-module.exports = {getCart, getCartByUserAndMouse, createCart, removeFromCart, updateQuantity}
+module.exports = {getCart, getCartByUserAndVariant, createCart, removeFromCart, updateQuantity}

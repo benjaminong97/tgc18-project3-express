@@ -15,18 +15,19 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('blacklisted_tokens', {
-    id: {type: 'bigint',
-  primaryKey : true,
-  autoIncrement: true
-  },
-  token : {
-    type: 'string', 
-    length: 5000
-  },
-  date_created : {
-    type : 'date'
-  }
+  return db.addColumn('carts', 'variant_id', {
+    type: 'int',
+    unsigned: true,
+    notNull: true,
+    foreignKey: {
+      name: "cart_variant_fk",
+      table: 'variants',
+      rules: {
+        onDelete: 'cascade',
+        onUpdate: 'restrict'
+      },
+      mapping: 'id'
+    }
   })
 };
 

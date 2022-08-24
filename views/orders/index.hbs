@@ -1,0 +1,41 @@
+{{#extends 'base'}}
+
+{{#block}}
+
+<div class="container-fluid">
+
+
+    <div class="container">
+        <h4>Pending Orders</h4>
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Customer Email</th>
+                        <th>Shipping Address</th>
+                        <th>Total Cost (SGD)</th>
+                        <th>Payment Reference</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each}}
+
+                    {{/each}}
+                </tbody>
+
+            </table>
+            <h4>Completed Orders</h4>
+        </div>
+
+    </div>
+
+
+</div>
+
+{{/block}}
+
+{{/extends}}

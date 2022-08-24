@@ -6,6 +6,7 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const FileStore = require('session-file-store')(session)
 const csrf = require('csurf')
+const cors = require('cors')
 
 hbs.registerHelper('divide', function (leftValue, rightValue) {
   return (leftValue / rightValue)
@@ -13,6 +14,8 @@ hbs.registerHelper('divide', function (leftValue, rightValue) {
 
 // create an instance of express app
 let app = express();
+
+app.use(cors())
 
 // set the view engine
 app.set("view engine", "hbs");

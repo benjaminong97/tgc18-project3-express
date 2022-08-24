@@ -72,7 +72,55 @@ const Cart = bookshelf.model('Cart', {
     tableName: "carts",
     mouse() {
         return this.belongsTo('Mouse')
+    },
+    variant() { 
+        return this.belongsTo('Variant')
     }
 })
 
-module.exports = { Mouse, Brand, User, Variant, Color, Feature, Backlighting, GameType, Cart};
+const BlacklistedToken = bookshelf.model('BlacklistedToken', {
+    tableName : 'blacklisted_tokens'
+})
+
+const Status = bookshelf.model('Status', {
+    tableName: 'statuses',
+    orders() {
+        return this.hasMany('Order')
+    }
+})
+
+const Order = bookshelf.model('Order', {
+    tableName: 'orders',
+    variants() {
+        return this.belongsToMany('Variant')
+    },
+
+    status() {
+        return this.belongsTo('Status')
+    },
+    address() {
+        return this.belongsTo('Address')
+    },
+    orderItems() {
+        return this.hasMany('OrderItem')
+    }
+})
+
+const Address = bookshelf.model('Address', {
+    tableName: 'addresses',
+    order() {
+        return this.hasOne('Order')
+    }
+})
+
+const OrderItem = bookshelf.model('OrderItem', {
+    tableName: 'order_items',
+    order() {
+        return this.belongsTo('Order')
+    },
+    variant() {
+        return this.belongsTo('Variant')
+    }
+})
+
+module.exports = { Mouse, Brand, User, Variant, Color, Feature, Backlighting, GameType, Cart, BlacklistedToken, Order, Address};

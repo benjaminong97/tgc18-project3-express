@@ -15,21 +15,19 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('orders', {
-    id: { 
-      type: 'int', 
-      primaryKey:true, 
-      autoIncrement:true, 
+  return db.createTable('statuses', {
+    id: {
+      type: 'int',
+      primaryKey: true,
+      autoIncrement: true,
       unsigned: true
     },
-    order_datetime: {
-      type: 'datetime'
-    },
-    order_completed_datetime: {
-      type: "datetime"
+    name: {
+      type: 'string',
+      length: 100,
+      notNull: true
     }
-
-  })
+  });
 };
 
 exports.down = function(db) {

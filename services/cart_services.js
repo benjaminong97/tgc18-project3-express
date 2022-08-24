@@ -5,10 +5,10 @@ class CartServices {
         this.user_id = user_id
     }
 
-    async addToCart (mouseId, quantity) {
+    async addToCart (variantId, mouseId, quantity) {
         //check if mouse is already in the cart
-        let cart = await cartDataLayer.getCartByUserAndMouse(
-            this.user_id, mouseId, quantity)
+        let cart = await cartDataLayer.getCartByUserAndVariant(
+            this.user_id, variantId, quantity)
 
         if (cart) {
             return await cartDataLayer.updateQuantity(
@@ -16,7 +16,7 @@ class CartServices {
             )
         } else {
             let newCart = cartDataLayer.createCart(
-                this.user_id, mouseId, quantity
+                this.user_id, mouseId, variantId, quantity
             )
             return newCart
         }

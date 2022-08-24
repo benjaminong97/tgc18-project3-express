@@ -15,20 +15,11 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('blacklisted_tokens', {
-    id: {type: 'bigint',
-  primaryKey : true,
-  autoIncrement: true
-  },
-  token : {
-    type: 'string', 
-    length: 5000
-  },
-  date_created : {
-    type : 'date'
-  }
+  return db.addColumn('addresses', 'line_2', {
+    type: 'string',
+    length: 100
   })
-};
+};;
 
 exports.down = function(db) {
   return null;

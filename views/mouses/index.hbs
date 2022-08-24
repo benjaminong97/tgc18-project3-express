@@ -4,14 +4,26 @@
 
 <div class="container">
     <h1>All Mouses</h1>
-    <div class="row">
-        <div>
+    <a class="btn btn-secondary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+  Search
+</a>
+
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="container">
+    <h3>
+        Search Parameters
+    </h3>
             <form method="GET">
                 {{{form}}}
-                <input type="submit" class="mb-3 mt-3 btn btn-primary" value="Search" />
+                <input type="submit" class="mb-3 mt-3 btn btn-light" value="Search" data-bs-toggle="offcanvas"/>
             </form>
-        </div>
-        <div>
+        
+  </div>
+</div>
+    <div class="row">
+        
+        <div class="w-100 overflow-auto p-3 shadow-lg rounded-3">
             <table class="table">
                 <thead>
                     <tr>

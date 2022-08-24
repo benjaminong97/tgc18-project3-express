@@ -29,6 +29,25 @@ const getAllMouses = async () => {
     return await Mouse.fetchAll()
 }
 
+const getVariantByMouseId = async (id) => {
+    return await Variant.where({
+        id:id
+    }).fetchAll({
+        require: false,
+        withRelated: ['mouse', 'color']
+    })
+}
+
+const getVariantById = async (id) => {
+    return await Variant.where({
+        id: id
+    }).fetch({
+        require: true,
+        withRelated: ['mouse', 'color']
+    })
+}
+
 module.exports = {
-    getAllBacklightings, getAllBrands, getAllFeatures, getAllGameTypes, getAllMouses
+    getAllBacklightings, getAllBrands, getAllFeatures, getAllGameTypes, getAllMouses,
+    getVariantById, getVariantByMouseId
 }

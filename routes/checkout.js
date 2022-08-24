@@ -22,13 +22,14 @@ router.get('/', async (req,res) => {
         }
 
         // find out how to display variant image here 
-        if (item.related('mouse').get('image_url')) {
-            lineItem['images'] = [item.related('product').get('image_url')]
+        if (item.related('variant').get('image_url')) {
+            lineItem['images'] = [item.related('variant').get('image_url')]
         }
         lineItems.push(lineItem);
         // save the quantity data along with the product id
         meta.push({
             'mouse_id' : item.get('mouse_id'),
+            'variant_id': item.get('variant_id'),
             'quantity': item.get('quantity')
         })
     }
@@ -39,6 +40,12 @@ router.get('/', async (req,res) => {
         line_items: lineItems,
         success_url: process.env.STRIPE_SUCCESS_URL + '?sessionId={CHECKOUT_SESSION_ID}',
         cancel_url: process.env.STRIPE_ERROR_URL,
+        shipping_address_collection: {
+            allowed_countries: ['SG'],
+        },
+        phone_number_collection: {
+            enabled: true,
+        },
         metadata: {
             'orders': metaData
         }
@@ -70,8 +77,13 @@ router.post('/process_payment', express.raw({type: 'application/json'}), async (
         let stripeSession = event.data.object;
         console.log(stripeSession);
         // process stripeSession
+        
     }
     res.send({ received: true });
+})
+
+router.get('/success', async (req,res) => {
+    res.send('success')
 })
 
 module.exports = router;
