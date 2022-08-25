@@ -27,7 +27,13 @@ const Brand = bookshelf.model('Brand', {
 })
 
 const User = bookshelf.model('User', {
-    tableName: 'users'
+    tableName: 'users',
+    orders() {
+        return this.hasMany('Order')
+    },
+    carts() {
+        return this.hasMany('Cart')
+    }
 })
 
 const Variant = bookshelf.model('Variant', {
@@ -37,6 +43,9 @@ const Variant = bookshelf.model('Variant', {
     },
     mouse() {
         return this.belongsTo('Mouse')
+    },
+    orderItems() {
+        return this.hasMany('OrderItem', 'variant_id')
     }
 })
 
@@ -75,6 +84,9 @@ const Cart = bookshelf.model('Cart', {
     },
     variant() { 
         return this.belongsTo('Variant')
+    },
+    user() {
+        return this.belongsTo('User')
     }
 })
 
@@ -93,6 +105,9 @@ const Order = bookshelf.model('Order', {
     tableName: 'orders',
     variants() {
         return this.belongsToMany('Variant')
+    },
+    user() {
+        return this.belongsTo('User')
     },
 
     status() {
@@ -119,8 +134,11 @@ const OrderItem = bookshelf.model('OrderItem', {
         return this.belongsTo('Order')
     },
     variant() {
-        return this.belongsTo('Variant')
+        return this.belongsTo('Variant', 'variant_id')
     }
 })
 
-module.exports = { Mouse, Brand, User, Variant, Color, Feature, Backlighting, GameType, Cart, BlacklistedToken, Order, Address};
+module.exports = { 
+    Mouse, Brand, User, Variant, Color, Feature, Backlighting, GameType, Cart, BlacklistedToken, 
+    Order, Address, OrderItem, Status
+};

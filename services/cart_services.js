@@ -22,15 +22,16 @@ class CartServices {
         }
     }
 
-    async remove(mouseId) {
+    async remove(variantId) {
         return await cartDataLayer.removeFromCart(
-            this.user_id, mouseId
+            
+            this.user_id, variantId
         )
     }
 
-    async setQuantity(mouseId, quantity) {
+    async setQuantity(variantId, quantity) {
         return await cartDataLayer.updateQuantity(
-            this.user_id, mouseId, quantity
+            this.user_id, variantId, quantity
         )
     }
 

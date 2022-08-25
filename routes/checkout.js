@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const CartServices = require('../services/cart_services')
+const CartServices = require('../services/cart_services');
+const OrderServices = require('../services/order_services');
 const Stripe = require('stripe')(process.env.STRIPE_SECRET_KEY, {
     apiVersion: '2020-08-27'
 })
@@ -47,7 +48,8 @@ router.get('/', async (req,res) => {
             enabled: true,
         },
         metadata: {
-            'orders': metaData
+            'orders': metaData,
+            'user_id' : req.session.user.id
         }
     }
 
@@ -75,9 +77,12 @@ router.post('/process_payment', express.raw({type: 'application/json'}), async (
     }
     if (event.type == 'checkout.session.completed') {
         let stripeSession = event.data.object;
-        console.log(stripeSession);
+        // console.log(stripeSession);
         // process stripeSession
+        let orderServices = new OrderServices()
+        await orderServices.createOrder(stripeSession)
         
+
     }
     res.send({ received: true });
 })

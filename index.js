@@ -90,6 +90,7 @@ const api = {
   users : require('./routes/api/users')
 
 }
+const orderRoutes = require('./routes/orders')
 
 async function main() {
   app.use('/', homeRoutes)
@@ -100,6 +101,7 @@ async function main() {
   app.use('/checkout', checkoutRoutes)
   app.use('/api/mouses', express.json(), api.mouses)
   app.use('/api/users', api.users)
+  app.use('/orders', orderRoutes)
 }
 
 main();

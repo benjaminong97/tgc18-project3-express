@@ -10,7 +10,7 @@
         <h4>{{this.mouse.name}}</h4>
         <h5>Cost: {{this.mouse.cost}}</h5>
 
-        <form method="POST" action="/cart/{{this.mouse_id}}/quantity/update">
+        <form method="POST" action="/cart/{{this.variant_id}}/quantity/update">
             <input type="hidden" value="{{../csrfToken}}" name="_csrf" />
             <h5>
                 Quantity: <input type="text" name="newQuantity" value="{{this.quantity}}" style="width:30px" />
@@ -19,7 +19,7 @@
         </form>
 
         <div>
-            <a href="/cart/{{this.mouse.id}}/remove" class="btn btn-danger">Remove</a>
+            <a href="/cart/{{this.variant_id}}/remove" class="btn btn-danger">Remove</a>
         </div>
     </li>
 

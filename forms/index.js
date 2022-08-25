@@ -263,7 +263,46 @@ const createSearchForm = (brands, features, backlightings, gameTypes) => {
     })
 }
 
+const createOrderSearchForm = (status, mouse) => {
+    return forms.create({
+        order_id: fields.string({
+            label: 'Order ID',
+            required: false,
+            errorAfterField: true
+        }),
+        email: fields.email({
+            required: false,
+            errorAfterField: true,
+            widget: widgets.email()
+        }),
+        status_id : fields.string({
+            label: 'Status',
+            required: false,
+            errorAfterField: true,
+            widget: widgets.select(),
+            choices: status
+        }),
+        date: fields.date({
+            required : false,
+            errorAfterField: true,
+            widget: widgets.date()
+        })
+    })
+}
+
+const createStatusForm = (status) => {
+    return forms.create({
+        status_id: fields.string({
+            required: true,
+            errorAfterField: true,
+            widget: widgets.select(),
+            choices: status
+        })
+    })
+}
+
 module.exports = { 
     createMouseForm, bootstrapField, createLoginForm, 
-    createRegistrationForm, createVariantForm, createSearchForm
+    createRegistrationForm, createVariantForm, createSearchForm,
+    createOrderSearchForm, createStatusForm
 };

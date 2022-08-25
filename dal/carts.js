@@ -5,15 +5,15 @@ const getCart = async (userId) => {
         'user_id': userId
     }).fetch({
         require: false,
-        withRelated: ['mouse']
+        withRelated: ['mouse', 'variant']
     })
 }
 
 const getCartByUserAndVariant = async (userId, variantId) => {
+    
     return await Cart.where({
-        'user_id' : userId,
-        
-        'variant_id' : variantId
+        user_id : userId,
+        variant_id : variantId
     }).fetch({
         require:false
     })
@@ -32,6 +32,8 @@ async function createCart(userId, mouseId, variantId, quantity) {
 
 async function removeFromCart(userId, variantId) {
     let cart = await getCartByUserAndVariant(userId, variantId);
+    console.log(userId, variantId)
+    console.log(cart)
     if (cart) {
         await cart.destroy()
         return true
@@ -39,7 +41,8 @@ async function removeFromCart(userId, variantId) {
     return false
 }
 
-async function updateQuantity(userId,  variantId, newQuantity) {
+async function updateQuantity(userId, variantId, newQuantity) {
+    console.log(userId, variantId, newQuantity)
     let cart = await getCartByUserAndVariant(userId, variantId)
     if (cart) {
         cart.set('quantity', newQuantity)

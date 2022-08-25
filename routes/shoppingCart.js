@@ -7,6 +7,9 @@ const {checkIfAuthenticated} = require('../middlewares')
 
 router.get('/', async(req,res) => {
     let cart = new CartServices(req.session.user.id)
+
+    let test = (await cart.getCart()).toJSON()
+    console.log(test)
     res.render('cart/index', {
         'shoppingCart' : (await cart.getCart()).toJSON()
     })
@@ -28,6 +31,7 @@ router.get('/:variant_id/remove', async (req,res)=> {
 
 router.post('/:variant_id/quantity/update', async (req,res) => {
     let cart = new CartServices(req.session.user.id)
+    console.log(req.params.variant_id, req.body.newQuantity)
     await cart.setQuantity(req.params.variant_id, req.body.newQuantity)
     req.flash('success_messages', 'Cart quantity updated')
     res.redirect('/cart/')
