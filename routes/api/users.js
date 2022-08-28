@@ -26,7 +26,8 @@ const getHashedPassword = (password) => {
 const {User, BlacklistedToken} = require('../../models')
 
 router.post('/login', async (req,res) => {
-    console.log(req.body.email)
+    console.log(req.body)
+    
     let user = await User.where({
         'email' : req.body.email
     }).fetch({

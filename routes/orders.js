@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const OrderServices = require('../services/order_services');
 const { Order } = require('../models')
-const {createOrderSearchForm} = require('../forms');
+const {createOrderSearchForm, createStatusForm} = require('../forms');
 const { bootstrapField } = require('../forms');
 
 router.get('/', async (req,res) => {
@@ -74,6 +74,24 @@ router.post('/:order_id/status/update', async (req,res) => {
     await orderServices.updateStatus(req.body.status_id)
     req.flash('success_messages', "Order status updated")
     res.redirect('/orders')
+})
+
+router.get('/:order_id/details', async (req,res) => {
+    const orderServices = new OrderServices(req.params.order_id)
+    const order = await orderServices.getOrderById()
+    
+    const orderItems = await orderServices.getOrderItemsByOrderId()
+    
+    const allStatus = await orderServices.getAllStatus()
+    const statusForm = createStatusForm(allStatus)
+
+    statusForm.fields.status_id.value = order.get('status_id')
+
+    res.render('orders/order-details', {
+        order: order.toJSON(),
+        orderItems: orderItems.toJSON(),
+        statusForm: statusForm.toHTML(bootstrapField)
+    })
 })
 
 module.exports = router

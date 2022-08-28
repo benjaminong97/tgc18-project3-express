@@ -1,37 +1,41 @@
 // import in the mouse model
-const {Mouse, Brand, Variant, Color, Feature, Backlighting, GameType} = require('../models');
+const { Mouse, Brand, Variant, Color, Feature, Backlighting, GameType } = require('../models');
 
-const getAllBrands = async() => {
+const getAllBrands = async () => {
     return await Brand.fetchAll().map((brand) => {
         return [brand.get('id'), brand.get('name')]
     })
 }
 
-const getAllFeatures = async() => {
+const getAllFeatures = async () => {
     return await Feature.fetchAll().map((feature) => {
         return [feature.get('id'), feature.get('name')]
     })
 }
 
-const getAllBacklightings = async() => {
+const getAllBacklightings = async () => {
     return await Backlighting.fetchAll().map((backlighting) => {
         return [backlighting.get('id'), backlighting.get('name')]
     })
 }
 
-const getAllGameTypes = async() => {
+const getAllGameTypes = async () => {
     return await GameType.fetchAll().map((gameType) => {
         return [gameType.get('id'), gameType.get('name')]
     })
 }
 
 const getAllMouses = async () => {
-    return await Mouse.fetchAll()
+    return await Mouse.collection().fetch(
+        {
+            'withRelated': ['variants', 'features', 'backlighting', 'gameType']
+        }
+    )
 }
 
 const getVariantByMouseId = async (id) => {
     return await Variant.where({
-        id:id
+        id: id
     }).fetchAll({
         require: false,
         withRelated: ['mouse', 'color']

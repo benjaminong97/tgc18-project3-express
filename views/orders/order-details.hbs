@@ -1,1 +1,106 @@
 {{#extends 'base'}}
+
+{{#block 'content'}}
+
+<div class="container-fluid">
+
+
+    <div class="container">
+        <h4>Order Details</h4>
+
+
+<div>
+  
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Customer Email</th>
+                        <th>Shipping Address</th>
+                        <th>Total Cost (SGD)</th>
+                        <th>Payment Reference</th>
+                        <th>Date and Time of Order</th>
+                        <th>Order Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                        <tr>
+                                    <td scope="row">{{order.id}}</td>
+                                    <td scope="row">{{order.user.first_name}} {{order.user.last_name}}</td>
+                                    <td scope="row">{{order.user.email}}</td>
+                                    <td scope="row">
+                                        {{order.address.line_1}}<br>
+                                        {{#if order.address.line_2}}{{order.address.line_2}}<br>{{/if}}
+                                        {{order.address.country}}<br>
+                                        {{#if order.address.state}}{{order.address.state}}<br>{{/if}}
+                                        {{#if order.address.city}}{{order.address.city}}<br>{{/if}}
+                                        {{order.address.postal_code}}
+                                    </td>
+                                    <td scope="row">{{divide order.cost 100}}</td>
+                                    <td scope="row">{{order.payment_reference}}</td>
+                                    <td scope="row">{{order.date}}</td>
+                                    <td scope="row"><form method="POST" action="/orders/{{order.id}}/status/update">
+                                         <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+                                        {{{statusForm}}}
+                                        <input type="submit" value="Update Status" class="btn btn-sm btn-secondary m-3">
+                                        </form></td>
+                                    <td scope="row">
+                                        <div class="btn-group btn-group-sm">
+                                            <a class="btn btn-dark btn-outline-light"
+                                                href="/orders/{{order.id}}/items"><i class="bi bi-pencil-square"></i></a>
+                                            <a class="btn btn-dark btn-outline-light" href="/orders/{{order.id}}/delete"><i class="bi bi-trash"></i></a>
+                                        </div>
+                                    </td>
+                                    <td scope="row">
+                                        
+                                    </td>
+                                </tr>
+                    
+                </tbody>
+
+            </table>
+            
+        </div>
+
+        <h5 class="mt-3">Order Items</h5> 
+        <div>
+            <table class="table">
+                <thead>
+                    <th></th>
+                    <th>Mouse</th>
+                    <th>Brand</th>
+                    <th>Color</th>
+                    <th>Quantity</th>
+                    <th>Cost (SGD)</th>
+                </thead>
+                <tbody>
+                    {{#each orderItems}}
+                    <tr>
+                        <td><img src="{{this.variant.image_url}}"/></td>
+                        <td>{{this.variant.mouse.name}}</td>
+                        <td>{{this.variant.mouse.brand.name}}</td>
+                        <td>{{this.variant.color.name}}</td>
+                        <td>{{this.quantity}}</td>
+                        <td>{{divide this.variant.mouse.cost 100}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <a class="btn btn-sm btn-secondary" href="/orders">Go Back to Orders</a>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+{{/block}}
+
+{{/extends}}

@@ -20,6 +20,8 @@ const getOrderByUserId = async (userId) => {
 }
 
 const getOrderItemsByOrderId = async (id) => {
+    console.log(id)
+    console.log(Order)
     return await OrderItem.where({
         order_id: id
     }).fetchAll({

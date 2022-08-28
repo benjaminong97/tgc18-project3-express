@@ -296,7 +296,10 @@ const createStatusForm = (status) => {
             required: true,
             errorAfterField: true,
             widget: widgets.select(),
-            choices: status
+            choices: status,
+            cssClasses: {
+                label: ['d-none']
+            }
         })
     })
 }

@@ -6,7 +6,32 @@ const {createMouseForm} = require('../../forms')
 const productDataLayer = require('../../dal/mouses')
 
 router.get('/', async(req,res)=>{
-    res.send(await productDataLayer.getAllMouses())
+    console.log('received req')
+    try{ res.send(await productDataLayer.getAllMouses())
+    } catch {
+        res.sendStatus(500)
+    }
+
+})
+
+router.get('/features', async (req,res) => {
+    let allFeatures = await productDataLayer.getAllFeatures()
+    res.send (allFeatures)
+})
+
+router.get('/backlightings', async (req,res) => {
+    let allBacklightings = await productDataLayer.getAllBacklightings()
+    res.send(allBacklightings)
+})
+
+router.get('/gametypes', async(req,res) => {
+    let allGameTypes = await productDataLayer.getAllGameTypes()
+    res.send(allGameTypes)
+})
+
+router.get('/brands', async(req,res) => {
+    let allBrands = await productDataLayer.getAllBrands()
+    res.send(allBrands)
 })
 
 router.post ('/', async(req,res) => {

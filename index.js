@@ -2,11 +2,11 @@ const express = require("express");
 const hbs = require("hbs");
 const wax = require("wax-on");
 require("dotenv").config();
+const cors = require('cors')
 const session = require('express-session')
 const flash = require('connect-flash')
 const FileStore = require('session-file-store')(session)
 const csrf = require('csurf')
-const cors = require('cors')
 
 hbs.registerHelper('divide', function (leftValue, rightValue) {
   return (leftValue / rightValue)
@@ -15,10 +15,14 @@ hbs.registerHelper('divide', function (leftValue, rightValue) {
 // create an instance of express app
 let app = express();
 
-app.use(cors())
+app.use(cors({
+  origin: true
+}))
+
 
 // set the view engine
 app.set("view engine", "hbs");
+
 
 // static folder
 app.use(express.static("public"));
@@ -33,6 +37,7 @@ app.use(
     extended: false
   })
 );
+
 
 app.use(session({
   store: new FileStore(),
@@ -75,6 +80,7 @@ app.use(function (req, res, next) {
   }
   next()
 })
+
 
 
 

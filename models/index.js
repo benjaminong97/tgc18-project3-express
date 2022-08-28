@@ -5,8 +5,8 @@ const Mouse = bookshelf.model('Mouse', {
     brand() {
         return this.belongsTo('Brand')
     },
-    variant() {
-        return this.belongsTo('Variant')
+    variants() {
+        return this.hasMany('Variant')
     },
     features() {
         return this.belongsToMany('Feature')
