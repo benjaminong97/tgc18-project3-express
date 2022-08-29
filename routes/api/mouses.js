@@ -1,40 +1,53 @@
 const express = require('express')
 const router = express.Router();
-const {Mouse} = require('../../models')
-const {createMouseForm} = require('../../forms')
+const { Mouse } = require('../../models')
+const { createMouseForm } = require('../../forms')
 
 const productDataLayer = require('../../dal/mouses')
 
-router.get('/', async(req,res)=>{
+router.get('/', async (req, res) => {
     console.log('received req')
-    try{ res.send(await productDataLayer.getAllMouses())
+    try {
+        res.send(await productDataLayer.getAllMouses())
     } catch {
         res.sendStatus(500)
     }
 
 })
 
-router.get('/features', async (req,res) => {
-    let allFeatures = await productDataLayer.getAllFeatures()
-    res.send (allFeatures)
+// router.get('/:mouse_id', async(req,res) => {
+//     let mouseId = req.params.mouse_id
+//     let mouse = await productDataLayer.getMouseById(mouseId)
+//     res.send(mouse)
+// })
+
+router.get('/:mouse_id/details', async (req, res) => {
+    let mouseId = req.params.mouse_id
+    const mouse = await productDataLayer.getMouseById(mouseId)
+    res.send(mouse)
 })
 
-router.get('/backlightings', async (req,res) => {
+router.get('/features', async (req, res) => {
+    let allFeatures = await productDataLayer.getAllFeatures()
+    res.send(allFeatures)
+})
+
+router.get('/backlightings', async (req, res) => {
     let allBacklightings = await productDataLayer.getAllBacklightings()
     res.send(allBacklightings)
 })
 
-router.get('/gametypes', async(req,res) => {
+router.get('/gametypes', async (req, res) => {
     let allGameTypes = await productDataLayer.getAllGameTypes()
     res.send(allGameTypes)
 })
 
-router.get('/brands', async(req,res) => {
+router.get('/brands', async (req, res) => {
     let allBrands = await productDataLayer.getAllBrands()
     res.send(allBrands)
 })
 
-router.post ('/', async(req,res) => {
+router.post('/', async (req, res) => {
     const allBrands = await productDataLayer.getAllBrands()
     const allBacklightings = await productDataLayer.getAllBacklightings()
     const allFeatures = await productDataLayer.getAllFeatures()
@@ -42,8 +55,8 @@ router.post ('/', async(req,res) => {
     const mouseForm = createMouseForm(allBrands, allFeatures, allBacklightings, allGameTypes);
 
     mouseForm.handle(req, {
-        'success' : async(form) => {
-            let {features, ...mouseData} = form.data
+        'success': async (form) => {
+            let { features, ...mouseData } = form.data
             const mouse = new Mouse(mouseData)
             await productDataLayer.save()
 
@@ -53,7 +66,7 @@ router.post ('/', async(req,res) => {
             }
             res.send(mouse)
         },
-        'error' : async(form) => {
+        'error': async (form) => {
             let errors = {}
             for (let key in form.fields) {
                 if (form.fieds[key].error) {
@@ -64,6 +77,29 @@ router.post ('/', async(req,res) => {
         }
     })
 
+
+})
+
+router.post('/search', async (req, res) => {
+    let q = Mouse.collection()
+
+    if (req.body.name) {
+        q.where('name', 'like', '%' + req.body.name + '%')
+    }
+
+    if (req.body.min_cost) {
+        q.where('cost', '>=', req.body.min_cost)
+    }
+
+    if (req.body.max_cost) {
+        q.where('cost', '<=', req.body.max_cost);
+    }
+
+    if (req.body.features) {
+        q.query('join', 'features_mouses', 'mouses.id', 'mouse_id').where(
+            'feature_id', 'in', req.body.features.split(',')
+        )
+    }
 
 })
 

@@ -81,7 +81,7 @@ router.get('/', async (req, res) => {
         }
         
         if(form.data.backlighting_id && form.data.backlighting_id != "0") {
-            q.where('brand_id', '=', form.data.backlighting_id)
+            q.where('backlighting_id', '=', form.data.backlighting_id)
         }
 
         if (form.data.gameType_id && form.data.gameType_id != '0') {
