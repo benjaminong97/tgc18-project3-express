@@ -15,9 +15,7 @@ hbs.registerHelper('divide', function (leftValue, rightValue) {
 // create an instance of express app
 let app = express();
 
-app.use(cors({
-  origin: true
-}))
+
 
 
 // set the view engine
@@ -37,6 +35,10 @@ app.use(
     extended: false
   })
 );
+
+app.use(cors({
+  origin: true
+}))
 
 
 app.use(session({
