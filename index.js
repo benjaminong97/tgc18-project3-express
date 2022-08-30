@@ -93,7 +93,8 @@ const cartRoutes = require('./routes/shoppingCart')
 const checkoutRoutes = require('./routes/checkout')
 const api = {
   mouses: require('./routes/api/mouses'),
-  users : require('./routes/api/users')
+  users : require('./routes/api/users'),
+  cart: require('./routes/api/shoppingCart')
 
 }
 const orderRoutes = require('./routes/orders')
@@ -108,6 +109,7 @@ async function main() {
   app.use('/api/mouses', express.json(), api.mouses)
   app.use('/api/users', api.users)
   app.use('/orders', orderRoutes)
+  app.use('/api/cart', api.cart)
 }
 
 main();

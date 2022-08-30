@@ -28,7 +28,7 @@ const getAllGameTypes = async () => {
 const getAllMouses = async () => {
     return await Mouse.collection().fetch(
         {
-            'withRelated': ['variants', 'features', 'backlighting', 'gameType']
+            'withRelated': ['variants', 'features', 'backlighting', 'gameType', 'brand']
         }
     )
 }
@@ -38,7 +38,7 @@ const getMouseById = async(id) => {
         id: id
     }).fetch({
         require: true,
-        withRelated: ['variants', 'features', 'backlighting', 'gameType']
+        withRelated: ['variants', 'features', 'backlighting', 'gameType', 'brand']
     })
 }
 

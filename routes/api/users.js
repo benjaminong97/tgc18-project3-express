@@ -82,6 +82,18 @@ router.get('/profile', checkIfAuthenticatedJWT, async (req,res) => {
     res.send(user)
 })
 
+router.post('/register', async(req,res) => {
+    let user = new User({
+        'first_name' : req.body.firstName,
+        'last_name' : req.body.lastName,
+        'email': req.body.email,
+        'password': req.body.password
+    })
+
+    await user.save()
+    res.send(user)
+})
+
 router.post('/logout', async (req, res) => {
     let refreshToken = req.body.refreshToken;
     if (!refreshToken) {
