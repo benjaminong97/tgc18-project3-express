@@ -15,47 +15,48 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('order_items', {
-    id: {
-      type: 'int',
-      primaryKey: true,
-      autoIncrement: true,
-      unsigned: true
-    },
-    order_id: {
-      type: 'int',
-      unsigned: true,
-      notNull: true,
-      foreignKey: {
-        name: 'order_items_order_fk',
-        table: 'orders',
-        rules:{
-          onDelete: 'CASCADE',
-          onUpdate: 'RESTRICT'
-        },
-        mapping: 'id'
-      }
-    },
-    variant_id: {
-      type: 'int',
-      unsigned: true,
-      notNull: true,
-      foreignKey: {
-        name: 'order_items_variant_fk',
-        table: 'variants',
-        rules:{
-          onDelete: 'RESTRICT',
-          onUpdate: 'RESTRICT'
-        },
-        mapping: 'id'
-      }
-    },
-    quantity: {
-      type: 'smallint',
-      notNull: true,
-      unsigned: true
-    }
-  });
+  return null
+  // return db.createTable('order_items', {
+  //   id: {
+  //     type: 'int',
+  //     primaryKey: true,
+  //     autoIncrement: true,
+  //     unsigned: true
+  //   },
+  //   order_id: {
+  //     type: 'int',
+  //     unsigned: true,
+  //     notNull: true,
+  //     foreignKey: {
+  //       name: 'order_items_order_fk',
+  //       table: 'orders',
+  //       rules:{
+  //         onDelete: 'CASCADE',
+  //         onUpdate: 'RESTRICT'
+  //       },
+  //       mapping: 'id'
+  //     }
+  //   },
+  //   variant_id: {
+  //     type: 'int',
+  //     unsigned: true,
+  //     notNull: true,
+  //     foreignKey: {
+  //       name: 'order_items_variant_fk',
+  //       table: 'variants',
+  //       rules:{
+  //         onDelete: 'RESTRICT',
+  //         onUpdate: 'RESTRICT'
+  //       },
+  //       mapping: 'id'
+  //     }
+  //   },
+  //   quantity: {
+  //     type: 'smallint',
+  //     notNull: true,
+  //     unsigned: true
+  //   }
+  // });
 };
 
 exports.down = function(db) {

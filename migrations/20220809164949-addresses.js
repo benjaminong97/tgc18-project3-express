@@ -15,45 +15,46 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('addresses', {
-    id: { 
-      type: 'int', 
-      primaryKey:true, 
-      autoIncrement:true, 
-      unsigned: true
-    },
-    postal_code: {
-      type: "string",
-      length: 15
-    },
-    unit_number: {
-      type: "string",
-      length: 15
-    },
-    country: {
-      type: 'string',
-      length: 45
-    },
-    street_name: {
-      type: 'string',
-      length: 100
-    },
-    state: {
-      type: 'string',
-      length: 45
-    },
-    city: {
-      type: 'string',
-      length: 45
-    },
-    block_number: {
-      type: "string",
-      length: 15,
-      nonNull: false
-    }
+  // return db.createTable('addresses', {
+  //   id: { 
+  //     type: 'int', 
+  //     primaryKey:true, 
+  //     autoIncrement:true, 
+  //     unsigned: true
+  //   },
+  //   postal_code: {
+  //     type: "string",
+  //     length: 15
+  //   },
+  //   unit_number: {
+  //     type: "string",
+  //     length: 15
+  //   },
+  //   country: {
+  //     type: 'string',
+  //     length: 45
+  //   },
+  //   street_name: {
+  //     type: 'string',
+  //     length: 100
+  //   },
+  //   state: {
+  //     type: 'string',
+  //     length: 45
+  //   },
+  //   city: {
+  //     type: 'string',
+  //     length: 45
+  //   },
+  //   block_number: {
+  //     type: "string",
+  //     length: 15,
+  //     nonNull: false
+  //   }
 
 
-  })
+  // })
+  return null
 };
 
 exports.down = function(db) {

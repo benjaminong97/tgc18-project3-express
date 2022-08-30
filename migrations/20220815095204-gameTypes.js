@@ -15,10 +15,12 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('gameTypes', {
-    id: { type: 'int', primaryKey:true, autoIncrement:true, unsigned:true},
-    name: { type: 'string', length:45},
-})
+//   return db.createTable('gameTypes', {
+//     id: { type: 'int', primaryKey:true, autoIncrement:true, unsigned:true},
+//     name: { type: 'string', length:45},
+// })
+
+return null
 };
 
 

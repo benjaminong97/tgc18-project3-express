@@ -15,25 +15,26 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('brands', {
-    id :
-    { 
-      type: 'int', 
-      primaryKey:true, 
-      autoIncrement:true, 
-      unsigned: true
-    },
-    name: 
-    {
-      type: 'string',
-      length: 100
-    },
-    image_url: 
-    {
-      type: 'string',
-      length: 2000
-    }
-  })
+  return null
+  // return db.createTable('brands', {
+  //   id :
+  //   { 
+  //     type: 'int', 
+  //     primaryKey:true, 
+  //     autoIncrement:true, 
+  //     unsigned: true
+  //   },
+  //   name: 
+  //   {
+  //     type: 'string',
+  //     length: 100
+  //   },
+  //   image_url: 
+  //   {
+  //     type: 'string',
+  //     length: 2000
+  //   }
+  // })
 };
 
 exports.down = function(db) {

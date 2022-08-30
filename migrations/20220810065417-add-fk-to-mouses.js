@@ -15,20 +15,21 @@ exports.setup = function (options, seedLink) {
 };
 
 exports.up = function (db) {
-  return db.addColumn('mouses', 'brand_id', {
-    type: 'int',
-    unsigned: true,
-    notNull: true,
-    foreignKey: {
-      name: "mouse_brand_fk",
-      table: 'brands',
-      rules: {
-        onDelete: 'cascade',
-        onUpdate: 'restrict'
-      },
-      mapping: 'id'
-    }
-  })
+  return null
+  // return db.addColumn('mouses', 'brand_id', {
+  //   type: 'int',
+  //   unsigned: true,
+  //   notNull: true,
+  //   foreignKey: {
+  //     name: "mouse_brand_fk",
+  //     table: 'brands',
+  //     rules: {
+  //       onDelete: 'cascade',
+  //       onUpdate: 'restrict'
+  //     },
+  //     mapping: 'id'
+  //   }
+  // })
 };
 
 exports.down = function (db) {

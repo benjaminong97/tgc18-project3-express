@@ -15,10 +15,11 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('backlightings', {
-    id: { type: 'int', primaryKey:true, autoIncrement:true, unsigned:true},
-      name: { type: 'string', length:80},
-  })
+  // return db.createTable('backlightings', {
+  //   id: { type: 'int', primaryKey:true, autoIncrement:true, unsigned:true},
+  //     name: { type: 'string', length:80},
+  // })
+  return null
 };
 
 

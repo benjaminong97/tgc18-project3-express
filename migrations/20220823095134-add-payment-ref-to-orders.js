@@ -15,12 +15,13 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.addColumn('orders', 
-    "payment_reference", {
-      type: 'string',
-      length: 500,
-      notNull: true
-  })
+  // return db.addColumn('orders', 
+  //   "payment_reference", {
+  //     type: 'string',
+  //     length: 500,
+  //     notNull: true
+  // })
+  return null
   
 };
 

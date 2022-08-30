@@ -15,25 +15,26 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('reviews', {
-    id: { 
-      type: 'int', 
-      primaryKey:true, 
-      autoIncrement:true, 
-      unsigned: true
-    },
-    review_datetime: {
-      type: 'datetime'
-    },
-    rating: {
-      type: "smallint"
-    },
-    comment: {
-      type: "string",
-      length: 320
-    }
+  return null
+  // return db.createTable('reviews', {
+  //   id: { 
+  //     type: 'int', 
+  //     primaryKey:true, 
+  //     autoIncrement:true, 
+  //     unsigned: true
+  //   },
+  //   review_datetime: {
+  //     type: 'datetime'
+  //   },
+  //   rating: {
+  //     type: "smallint"
+  //   },
+  //   comment: {
+  //     type: "string",
+  //     length: 320
+  //   }
 
-  })
+  // })
 };
 
 exports.down = function(db) {

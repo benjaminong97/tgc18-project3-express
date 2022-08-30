@@ -15,31 +15,32 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('users', {
-    id: { 
-      type: 'int', 
-      primaryKey:true, 
-      autoIncrement:true, 
-      unsigned: true
-    },
-    first_name : {
-      type: 'string',
-      length: 100
-    },
-    last_name : {
-      type: "string",
-      length: 100
-    },
-    email: {
-      type: 'string',
-      length: 320
-    },
-    password: {
-      type: "string",
-      length: 64
-    }
+  return null
+  // return db.createTable('users', {
+  //   id: { 
+  //     type: 'int', 
+  //     primaryKey:true, 
+  //     autoIncrement:true, 
+  //     unsigned: true
+  //   },
+  //   first_name : {
+  //     type: 'string',
+  //     length: 100
+  //   },
+  //   last_name : {
+  //     type: "string",
+  //     length: 100
+  //   },
+  //   email: {
+  //     type: 'string',
+  //     length: 320
+  //   },
+  //   password: {
+  //     type: "string",
+  //     length: 64
+  //   }
 
-  })
+  // })
 };
 
 exports.down = function(db) {

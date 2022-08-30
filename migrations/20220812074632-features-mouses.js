@@ -15,41 +15,42 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('features_mouses', {
-    id: {
-      type: 'int',
-      primaryKey: true,
-      autoIncrement: true
-    },
-    feature_id: {
-      type: 'int',
-      notNull: true,
-      unsigned: true,
-      foreignKey : {
-        'name': 'features_mouses_feature_fk',
-        'table': 'features',
-        rules: {
-          onDelete: "CASCADE",
-          onUpdate: "RESTRICT"
-        },
-        mapping: 'id'
-      }
-    },
-    mouse_id: {
-      type: 'int',
-      notNull: true,
-      unsigned: true, 
-      foreignKey: {
-        name: 'features_mouses_mouse_fk',
-        table: 'mouses',
-        rules: {
-          onDelete: "CASCADE",
-          onUpdate: "RESTRICT"
-        },
-        mapping: 'id'
-      }
-    }
-  })
+  // return db.createTable('features_mouses', {
+  //   id: {
+  //     type: 'int',
+  //     primaryKey: true,
+  //     autoIncrement: true
+  //   },
+  //   feature_id: {
+  //     type: 'int',
+  //     notNull: true,
+  //     unsigned: true,
+  //     foreignKey : {
+  //       'name': 'features_mouses_feature_fk',
+  //       'table': 'features',
+  //       rules: {
+  //         onDelete: "CASCADE",
+  //         onUpdate: "RESTRICT"
+  //       },
+  //       mapping: 'id'
+  //     }
+  //   },
+  //   mouse_id: {
+  //     type: 'int',
+  //     notNull: true,
+  //     unsigned: true, 
+  //     foreignKey: {
+  //       name: 'features_mouses_mouse_fk',
+  //       table: 'mouses',
+  //       rules: {
+  //         onDelete: "CASCADE",
+  //         onUpdate: "RESTRICT"
+  //       },
+  //       mapping: 'id'
+  //     }
+  //   }
+  // })
+  return null
 };
 
 exports.down = function(db) {

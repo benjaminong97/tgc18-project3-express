@@ -15,7 +15,8 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.removeColumn('mouses', 'features')
+  // return db.removeColumn('mouses', 'features')
+  return null
 };
 
 exports.down = function(db) {

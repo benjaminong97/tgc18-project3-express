@@ -15,20 +15,21 @@ exports.setup = function (options, seedLink) {
 };
 
 exports.up = function (db) {
-  return db.addColumn('mouses', 'backlighting_id', {
-    type: 'int',
-    unsigned: true,
-    notNull: true,
-    foreignKey: {
-      name: 'mouse_backlighting_fk',
-      table: 'backlightings',
-      rules: {
-        onDelete: 'cascade',
-        onUpdate: 'restrict'
-      },
-      mapping: 'id'
-    }
-  })
+  // return db.addColumn('mouses', 'backlighting_id', {
+  //   type: 'int',
+  //   unsigned: true,
+  //   notNull: true,
+  //   foreignKey: {
+  //     name: 'mouse_backlighting_fk',
+  //     table: 'backlightings',
+  //     rules: {
+  //       onDelete: 'cascade',
+  //       onUpdate: 'restrict'
+  //     },
+  //     mapping: 'id'
+  //   }
+  // })
+  return null
 };
 
 exports.down = function (db) {

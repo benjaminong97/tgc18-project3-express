@@ -15,20 +15,21 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function (db) {
-  return db.addColumn('variants', 'color_id', {
-    type: 'int',
-    unsigned: true,
-    notNull: true,
-    foreignKey: {
-      name: "color_variant_fk",
-      table: 'colors',
-      rules: {
-        onDelete: 'cascade',
-        onUpdate: 'restrict'
-      },
-      mapping: 'id'
-    }
-  })
+  // return db.addColumn('variants', 'color_id', {
+  //   type: 'int',
+  //   unsigned: true,
+  //   notNull: true,
+  //   foreignKey: {
+  //     name: "color_variant_fk",
+  //     table: 'colors',
+  //     rules: {
+  //       onDelete: 'cascade',
+  //       onUpdate: 'restrict'
+  //     },
+  //     mapping: 'id'
+  //   }
+  // })
+  return null
 };
 
 exports.down = function(db) {

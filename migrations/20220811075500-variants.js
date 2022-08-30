@@ -15,28 +15,29 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('variants', {
-    id: { 
-      type: 'int', 
-      primaryKey:true, 
-      autoIncrement:true, 
-      unsigned: true
-    },
-    stock: {
-      type: 'int'
+  // return db.createTable('variants', {
+  //   id: { 
+  //     type: 'int', 
+  //     primaryKey:true, 
+  //     autoIncrement:true, 
+  //     unsigned: true
+  //   },
+  //   stock: {
+  //     type: 'int'
       
-    },
-    image_url : {
-      type: "string",
-      length: 2048
-    },
-    thumbnail_image_url : {
-      type: "string",
-      length: 2048
-    }
+  //   },
+  //   image_url : {
+  //     type: "string",
+  //     length: 2048
+  //   },
+  //   thumbnail_image_url : {
+  //     type: "string",
+  //     length: 2048
+  //   }
     
     
-  });
+  // });
+  return null
 };
 
 exports.down = function(db) {
