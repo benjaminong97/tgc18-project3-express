@@ -26,7 +26,7 @@ const getHashedPassword = (password) => {
 const {User, BlacklistedToken} = require('../../models')
 
 router.post('/login', async (req,res) => {
-    console.log(req.body)
+    
     
     let user = await User.where({
         'email' : req.body.email
@@ -38,7 +38,10 @@ router.post('/login', async (req,res) => {
         let accessToken = generateAccessToken(user.toJSON(), process.env.TOKEN_SECRET, '15m')
         let refreshToken = generateAccessToken(user.toJSON(), process.env.REFRESH_TOKEN_SECRET, '7d')
         res.send({
-            accessToken, refreshToken
+            accessToken, 
+            refreshToken,
+            'user_id' : user.get('id'),
+            'user_first_name': user.get('first_name')
         })
     } else {
         res.send({
@@ -77,8 +80,12 @@ router.post('/refresh', async(req,res) => {
     })
 })
 
-router.get('/profile', checkIfAuthenticatedJWT, async (req,res) => {
-    const user = req.user
+router.get('/profile', async (req,res) => {
+    let user = await User.where({
+        'id' : req.headers.id
+    }).fetch({
+        require: false
+    })
     res.send(user)
 })
 

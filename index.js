@@ -16,6 +16,7 @@ hbs.registerHelper('divide', function (leftValue, rightValue) {
 let app = express();
 
 
+app.use(cors())
 
 
 // set the view engine
@@ -36,9 +37,6 @@ app.use(
   })
 );
 
-app.use(cors({
-  origin: true
-}))
 
 
 app.use(session({
@@ -62,6 +60,7 @@ app.use(function (req, res, next) {
   console.log("checking for csrf exclusion")
   // exclude whatever url we want from CSRF protection
   if (req.url === "/checkout/process_payment" || req.url.slice(0,5) == '/api/') {
+    console.log('api detected')
     return next();
   }
   csurfInstance(req, res, next);
@@ -109,7 +108,7 @@ async function main() {
   app.use('/cart', cartRoutes)
   app.use('/checkout', checkoutRoutes)
   app.use('/api/mouses', express.json(), api.mouses)
-  app.use('/api/users', api.users)
+  app.use('/api/users',express.json(), api.users)
   app.use('/orders', orderRoutes)
   app.use('/api/cart', api.cart)
 }

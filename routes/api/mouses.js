@@ -81,10 +81,11 @@ router.post('/', async (req, res) => {
 })
 
 router.post('/search', async (req, res) => {
+    console.log(req.body)
     let q = Mouse.collection()
 
     if (req.body.name) {
-        q.where('name', 'like', '%' + req.body.name + '%')
+        q = q.where('name', 'ilike', '%' + req.body.name + '%')
     }
 
     if (req.body.min_cost) {
@@ -105,9 +106,10 @@ router.post('/search', async (req, res) => {
         )
     }
 
-    if (req.body.brand) {
+    if (req.body.brand && req.body.brand.length != 0) {
+        console.log(req.body.brand)
         q.query('join', 'brands', 'mouses.brand_id', 'brands.id').where(
-            'brands.id', 'in', req.body.brand.split(',')
+            'brands.id', 'in', req.body.brand
         )
     }
 
@@ -119,22 +121,24 @@ router.post('/search', async (req, res) => {
         q.where('connectivity', '=', req.body.connectivity)
     }
 
-    if (req.body.backlighting) {
+    if (req.body.backlighting && req.body.backlighting.length != 0) {
         q.query('join', 'backlightings', 'mouses.backlighting_id', 'backlightings.id').where(
-            'backlightings.id', 'in', req.body.backlighting.split(',')
+            'backlightings.id', 'in', req.body.backlighting
         )
     }
 
-    if (req.body.features) {
-        console.log(req.body.features.split(','))
+    if (req.body.features && req.body.features.length != 0) {
+        console.log(req.body.features)
         q.query('join', 'features_mouses', 'mouses.id', 'features_mouses.mouse_id').where(
-            'feature_id', 'in', req.body.features.split(',')
+            'feature_id', 'in', req.body.features
         )
     }
 
     let searchResults = await q.fetch({
         withRelated: ['variants', 'features', 'backlighting', 'gameType']
     })
+    
+
 
     res.send(searchResults)
 
