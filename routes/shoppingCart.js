@@ -15,6 +15,8 @@ router.get('/', async(req,res) => {
     })
 })
 
+
+// add to cart
 router.get('/:mouse_id/:variant_id/add',checkIfAuthenticated, async (req,res) => {
     let cart = new CartServices(req.session.user.id)
     await cart.addToCart(req.params.variant_id,req.params.mouse_id, 1)

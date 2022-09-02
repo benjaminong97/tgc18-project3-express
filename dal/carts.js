@@ -44,6 +44,7 @@ async function removeFromCart(userId, variantId) {
 async function updateQuantity(userId, variantId, newQuantity) {
     console.log(userId, variantId, newQuantity)
     let cart = await getCartByUserAndVariant(userId, variantId)
+    
     if (cart) {
         cart.set('quantity', newQuantity)
         cart.save()

@@ -91,10 +91,10 @@ router.get('/profile', async (req,res) => {
 
 router.post('/register', async(req,res) => {
     let user = new User({
-        'first_name' : req.body.firstName,
-        'last_name' : req.body.lastName,
+        'first_name' : req.body.first_name,
+        'last_name' : req.body.last_name,
         'email': req.body.email,
-        'password': req.body.password
+        'password': getHashedPassword(req.body.password)
     })
 
     await user.save()

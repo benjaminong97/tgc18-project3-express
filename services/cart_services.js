@@ -12,7 +12,7 @@ class CartServices {
 
         if (cart) {
             return await cartDataLayer.updateQuantity(
-                this.user_id, mouseId, cart.get('quantity')
+                this.user_id, variantId, (cart.get('quantity') + 1)
             )
         } else {
             let newCart = cartDataLayer.createCart(

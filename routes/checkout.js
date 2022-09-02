@@ -7,9 +7,9 @@ const Stripe = require('stripe')(process.env.STRIPE_SECRET_KEY, {
     apiVersion: '2020-08-27'
 })
 
-router.get('/', async (req,res) => {
-    const cart = new CartServices(req.session.user.id)
-
+router.get('/:user_id', async (req,res) => {
+    const cart = new CartServices(req.params.user_id)
+    console.log(cart)
     let items = await cart.getCart()
 
     let lineItems = [];
@@ -49,7 +49,7 @@ router.get('/', async (req,res) => {
         },
         metadata: {
             'orders': metaData,
-            'user_id' : req.session.user.id
+            'user_id' : req.params.user_id
         }
     }
 
