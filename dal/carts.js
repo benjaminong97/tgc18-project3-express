@@ -5,7 +5,7 @@ const getCart = async (userId) => {
         'user_id': userId
     }).fetch({
         require: false,
-        withRelated: ['mouse', 'variant']
+        withRelated: ['mouse', 'variant', 'variant.color']
     })
 }
 

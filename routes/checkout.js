@@ -1,4 +1,5 @@
 const express = require('express');
+const { Variant } = require('../models');
 const router = express.Router();
 
 const CartServices = require('../services/cart_services');
@@ -7,9 +8,10 @@ const Stripe = require('stripe')(process.env.STRIPE_SECRET_KEY, {
     apiVersion: '2020-08-27'
 })
 
-router.get('/:user_id', async (req,res) => {
+router.get('/:user_id/checkout', async (req,res) => {
+    console.log(req.params.user_id)
     const cart = new CartServices(req.params.user_id)
-    console.log(cart)
+    
     let items = await cart.getCart()
 
     let lineItems = [];
@@ -62,6 +64,7 @@ router.get('/:user_id', async (req,res) => {
 })
 
 router.post('/process_payment', express.raw({type: 'application/json'}), async (req, res) => {
+    
     let payload = req.body;
     let endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
     let sigHeader = req.headers["stripe-signature"];
@@ -77,18 +80,48 @@ router.post('/process_payment', express.raw({type: 'application/json'}), async (
     }
     if (event.type == 'checkout.session.completed') {
         let stripeSession = event.data.object;
-        // console.log(stripeSession);
+        console.log(stripeSession)
         // process stripeSession
-        let orderServices = new OrderServices()
+        const orderServices = new OrderServices()
         await orderServices.createOrder(stripeSession)
+
+        const user_id = stripeSession.metadata.user_id
         
+        const cart = new CartServices(user_id)
+        
+        for (let order of JSON.parse(stripeSession.metadata.orders)) {
+            //update stock remaining
+            console.log(order)
+            let orderQuantity = order.quantity
+            let variantId = order.variant_id
+
+            const variant = await Variant.where({
+                'id': variantId
+            }).fetch({
+                require: true
+            })
+
+            variantJSON = variant.toJSON()
+
+            variant.set({
+                stock : (variantJSON.stock - orderQuantity)
+            })
+
+            await variant.save()
+
+            
+            //delete cart items
+            await cart.remove(variantId)
+            
+        }
+    
 
     }
     res.send({ received: true });
 })
 
 router.get('/success', async (req,res) => {
-    res.send('success')
+    res.redirect('https://3000-benjaminong-tgc18projec-anbc7vnm7qy.ws-us63.gitpod.io/mouses')
 })
 
 module.exports = router;

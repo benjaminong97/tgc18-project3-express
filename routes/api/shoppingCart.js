@@ -39,6 +39,7 @@ router.post('/:user_id/add/:mouse_id/:variant_id', async function (req,res) {
 
 //update cart item quantity
 router.post('/:user_id/update/:variant_id', async function (req,res) {
+    console.log(req.body)
     let cartServices = new CartServices(req.params.user_id)
     try {
         await cartServices.setQuantity(req.params.variant_id, req.body.quantity)
@@ -52,7 +53,7 @@ router.post('/:user_id/update/:variant_id', async function (req,res) {
 
 
 // delete cart item from cart
-router.post('/:user_id/remove/:variant_id', async function(req,res){
+router.get('/:user_id/remove/:variant_id', async function(req,res){
     let cartServices = new CartServices(req.params.user_id)
     try {
         await cartServices.remove(req.params.variant_id)

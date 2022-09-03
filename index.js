@@ -110,7 +110,7 @@ async function main() {
   app.use('/api/mouses', express.json(), api.mouses)
   app.use('/api/users',express.json(), api.users)
   app.use('/orders', orderRoutes)
-  app.use('/api/cart', api.cart)
+  app.use('/api/cart', express.json(), api.cart)
 }
 
 main();

@@ -19,6 +19,8 @@ const Mouse = bookshelf.model('Mouse', {
     }
 });
 
+
+
 const Brand = bookshelf.model('Brand', {
     tableName: 'brands',
     mouses() {
