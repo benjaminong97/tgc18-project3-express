@@ -74,7 +74,7 @@ router.post('/login', async (req,res) =>
                         email: user.get('email')
                     }
                     req.flash('success_messages', "Welcome, " + user.get('first_name') + " " + user.get('last_name'))
-                    res.redirect('/users/profile')
+                    res.redirect('/mouses')
                 } else {
                     req.flash('error_messages', 'Authentication details incorrect, please try again')
                     res.redirect('/users/login')

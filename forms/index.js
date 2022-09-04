@@ -270,11 +270,11 @@ const createOrderSearchForm = (status, mouse) => {
             required: false,
             errorAfterField: true
         }),
-        email: fields.email({
-            required: false,
-            errorAfterField: true,
-            widget: widgets.email()
-        }),
+        // email: fields.email({
+        //     required: false,
+        //     errorAfterField: true,
+        //     widget: widgets.email()
+        // }),
         status_id : fields.string({
             label: 'Status',
             required: false,

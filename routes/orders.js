@@ -50,6 +50,8 @@ router.get('/', async (req,res) => {
                 q.where('date', '=', form.data.date)
             }
 
+           
+
             const orders = await q.fetch({
                 withRelated : ['user', 'status', 'address']
             })

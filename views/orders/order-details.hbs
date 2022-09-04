@@ -49,11 +49,11 @@
                                         <input type="submit" value="Update Status" class="btn btn-sm btn-secondary m-3">
                                         </form></td>
                                     <td scope="row">
-                                        <div class="btn-group btn-group-sm">
+                                        {{!-- <div class="btn-group btn-group-sm">
                                             <a class="btn btn-dark btn-outline-light"
                                                 href="/orders/{{order.id}}/items"><i class="bi bi-pencil-square"></i></a>
                                             <a class="btn btn-dark btn-outline-light" href="/orders/{{order.id}}/delete"><i class="bi bi-trash"></i></a>
-                                        </div>
+                                        </div> --}}
                                     </td>
                                     <td scope="row">
                                         
@@ -80,7 +80,7 @@
                 <tbody>
                     {{#each orderItems}}
                     <tr>
-                        <td><img src="{{this.variant.image_url}}"/></td>
+                        <td><img src="{{this.variant.image_url}}" width='150px'/></td>
                         <td>{{this.variant.mouse.name}}</td>
                         <td>{{this.variant.mouse.brand.name}}</td>
                         <td>{{this.variant.color.name}}</td>

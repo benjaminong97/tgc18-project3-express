@@ -2,11 +2,9 @@
 
 {{#block 'content'}}
 
-<div class="container">
-    <h1>All Mouses</h1>
-    <a class="btn btn-secondary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-  Search
-</a>
+<div class="container mt-3">
+    <h2>Product Management</h2>
+    
 
 
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
@@ -41,7 +39,10 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <a href="/mouses/create" class="btn btn-secondary btn-sm">Create New Mouse</a>
+                        <a href="/mouses/create" class="btn btn-secondary btn-sm mx-3">Create New Mouse</a>
+                        <a class="btn btn-secondary btn-sm" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+  Search
+</a>
                     </tr>
                     {{#each mouses}}
                     <tr>
@@ -74,9 +75,9 @@
                         </td>
                         <td>
                             <a href="/mouses/{{this.id}}/update" class="btn btn-primary btn-sm">Update</a>
-                            <a href="/mouses/{{this.id}}/delete" class="btn btn-danger btn-sm">Delete</a>
-                            <a href="/mouses/{{this.id}}/variants" class="btn btn-secondary btn-sm">Details</a>
-                            <a href="/cart/{{this.id}}/add" class="btn btn-success btn-sm">Add to cart</a>
+                            <a href="/mouses/{{this.id}}/delete" class="btn btn-danger btn-sm mt-2">Delete</a>
+                            <a href="/mouses/{{this.id}}/variants" class="btn btn-secondary btn-sm mt-2">Details</a>
+                            {{!-- <a href="/cart/{{this.id}}/add" class="btn btn-success btn-sm">Add to cart</a> --}}
                 
                         </td>
                     </tr>

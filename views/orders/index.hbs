@@ -2,15 +2,13 @@
 
 {{#block 'content'}}
 
-<div class="container-fluid">
+<div class="container-fluid mt-3">
 
 
     <div class="container">
-        <h4>Orders</h4>
+        <h2>Order Management</h2>
 
-         <a class="btn btn-secondary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-  Search
-</a>
+         
 
 
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
@@ -25,7 +23,10 @@
         
   </div>
 </div>
-        <div>
+        <div class="w-100 overflow-auto p-3 shadow-lg rounded-3">
+            <a class="btn btn-secondary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+  Search
+</a>
             <table class="table">
                 <thead>
                     <tr>
@@ -61,8 +62,8 @@
                                     <td scope="row">
                                         
                                             <a class="btn btn-dark btn-outline-light"
-                                                href="/orders/{{this.id}}/details"><i class="bi bi-pencil-square"></i></a>
-                                            <a class="btn btn-dark btn-outline-light" href="/orders/{{this.id}}/delete"><i class="bi bi-trash"></i></a>
+                                                href="/orders/{{this.id}}/details">Details</a>
+                                            {{!-- <a class="btn btn-dark btn-outline-light" href="/orders/{{this.id}}/delete"><i class=""></i></a> --}}
                                         
                                     </td>
                                 </tr>
