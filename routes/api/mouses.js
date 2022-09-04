@@ -135,7 +135,7 @@ router.post('/search', async (req, res) => {
     }
 
     let searchResults = await q.fetch({
-        withRelated: ['variants', 'features', 'backlighting', 'gameType', 'brand']
+        withRelated: ['variants', 'features', 'backlighting', 'gameType', 'brand', 'reviews']
     })
     
 

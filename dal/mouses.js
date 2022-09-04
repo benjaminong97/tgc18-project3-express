@@ -38,7 +38,7 @@ const getMouseById = async(id) => {
         id: id
     }).fetch({
         require: true,
-        withRelated: ['variants', 'features', 'backlighting', 'gameType', 'brand']
+        withRelated: ['variants', 'features', 'backlighting', 'gameType', 'brand', 'reviews', 'variants.color']
     })
 }
 

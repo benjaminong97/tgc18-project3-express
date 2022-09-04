@@ -122,7 +122,7 @@ router.post('/process_payment', express.raw({type: 'application/json'}), async (
 })
 
 router.get('/success', async (req,res) => {
-    res.redirect('https://3000-benjaminong-tgc18projec-anbc7vnm7qy.ws-us63.gitpod.io/mouses')
+    res.redirect('https://3000-benjaminong-tgc18projec-anbc7vnm7qy.ws-us63.gitpod.io/profile')
 })
 
 module.exports = router;
