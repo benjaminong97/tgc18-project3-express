@@ -64,7 +64,7 @@ router.get('/:user_id/checkout', async (req,res) => {
 })
 
 router.post('/process_payment', express.raw({type: 'application/json'}), async (req, res) => {
-    
+    console.log('payment processing')
     let payload = req.body;
     let endpointSecret = process.env.STRIPE_ENDPOINT_SECRET;
     let sigHeader = req.headers["stripe-signature"];
@@ -81,6 +81,7 @@ router.post('/process_payment', express.raw({type: 'application/json'}), async (
     if (event.type == 'checkout.session.completed') {
         let stripeSession = event.data.object;
         // process stripeSession
+        console.log('stripe received')
         const orderServices = new OrderServices()
         await orderServices.createOrder(stripeSession)
 
