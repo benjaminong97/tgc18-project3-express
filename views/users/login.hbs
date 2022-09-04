@@ -1,17 +1,40 @@
 {{#extends 'base'}}
 
 {{#block 'content'}}
-<h1>Login</h1>
-<p>Please login with your account below!</p>
 
-<form method ='POST'>
-    <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
-{{{form}}}
-<br/>
-<input type = 'submit' class = 'btn btn-primary' value = "Login"/>
-</form>
+<div class="container-fluid">
+    <div class="container">
+        <div class="h-100 p-3 d-flex justify-content-center">
+            <div class="w-150 shadow-lg align-self-center"
+                style ='background-color:rgb(187, 187, 187); max-width: 450px'
+                >
+                <h1>Admin Login</h1>
+                <div>
+                    <img />
+                </div>
 
-<a href="/users/register" class="btn btn-secondary">Register</a>
+                <form method='POST'>
+                    <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+                    {{{form}}}
+                    <br />
+                    <input type='submit' class='btn btn-secondary' value="Login" />
+                    <a href="/users/register" class="btn btn-secondary">Register</a>
+                </form>
+
+                <div class="text-muted">
+                    Please do not log in if you are not a staff of Superior Sensors
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
 {{/block}}
 
 {{/extends}}

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router();
-const { Mouse } = require('../../models')
+const { Mouse, Review } = require('../../models')
 const { createMouseForm } = require('../../forms')
 
 const productDataLayer = require('../../dal/mouses')
@@ -135,13 +135,42 @@ router.post('/search', async (req, res) => {
     }
 
     let searchResults = await q.fetch({
-        withRelated: ['variants', 'features', 'backlighting', 'gameType']
+        withRelated: ['variants', 'features', 'backlighting', 'gameType', 'brand']
     })
     
 
 
     res.send(searchResults)
 
+})
+
+// adding review
+router.post('/comment', async(req,res) => {
+    const review = new Review({
+        rating: req.body.rating,
+        comment: req.body.comment,
+        mouse_id: req.body.mouse_id,
+        review_datetime: new Date()
+    })
+
+    await review.save()
+    res.send(review)
+})
+
+//getting all reviews for a mouse
+router.get('/comment/:mouse_id', async(req,res) => {
+    console.log(req.params.mouse_id)
+    
+
+    
+    let review = await Review.where({
+        mouse_id : req.params.mouse_id
+    }).fetchAll({
+        require: false
+    })
+
+    
+    res.send(review)
 })
 
 module.exports = router;

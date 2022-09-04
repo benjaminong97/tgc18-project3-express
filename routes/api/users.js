@@ -102,6 +102,7 @@ router.post('/register', async(req,res) => {
 })
 
 router.post('/logout', async (req, res) => {
+    console.log('logout route reached')
     let refreshToken = req.body.refreshToken;
     if (!refreshToken) {
         res.sendStatus(401);

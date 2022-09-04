@@ -76,11 +76,10 @@ router.post('/process_payment', express.raw({type: 'application/json'}), async (
         res.send({
             'error': e.message
         })
-        console.log(e.message)
+        
     }
     if (event.type == 'checkout.session.completed') {
         let stripeSession = event.data.object;
-        console.log(stripeSession)
         // process stripeSession
         const orderServices = new OrderServices()
         await orderServices.createOrder(stripeSession)
@@ -91,7 +90,7 @@ router.post('/process_payment', express.raw({type: 'application/json'}), async (
         
         for (let order of JSON.parse(stripeSession.metadata.orders)) {
             //update stock remaining
-            console.log(order)
+            
             let orderQuantity = order.quantity
             let variantId = order.variant_id
 
@@ -112,6 +111,8 @@ router.post('/process_payment', express.raw({type: 'application/json'}), async (
             
             //delete cart items
             await cart.remove(variantId)
+
+
             
         }
     

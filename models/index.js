@@ -16,10 +16,18 @@ const Mouse = bookshelf.model('Mouse', {
     },
     gameType() {
         return this.belongsTo('GameType')
+    },
+    reviews() {
+        return this.hasMany('Review')
     }
 });
 
-
+const Review = bookshelf.model('Review', {
+    tableName: 'reviews',
+    mouse() {
+        return this.belongsTo('Mouse')
+    }
+})
 
 const Brand = bookshelf.model('Brand', {
     tableName: 'brands',
@@ -142,5 +150,5 @@ const OrderItem = bookshelf.model('OrderItem', {
 
 module.exports = { 
     Mouse, Brand, User, Variant, Color, Feature, Backlighting, GameType, Cart, BlacklistedToken, 
-    Order, Address, OrderItem, Status
+    Order, Address, OrderItem, Status, Review
 };

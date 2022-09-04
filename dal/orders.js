@@ -9,13 +9,14 @@ const getOrderById = async (id) => {
     })
 }
 
-const getOrderByUserId = async (userId) => {
+const getOrdersByUserId = async (userId) => {
+    console.log(userId)
     return await Order.collection().where({
         user_id: userId
     }).fetch({
         require: false,
-        withRelated: ['variants', 'user', 'status', 'address', 'orderItems',
-            'orderItems.variant.mouse', 'orderItems.variant.size', 'orderItems.variant.color']
+        withRelated: ['user', 'status', 'address', 'orderItems',
+            'orderItems.variant.mouse', 'orderItems.variant.color']
     })
 }
 
@@ -39,6 +40,7 @@ const getOrderItemsByVariantId = async (variantId) => {
 }
 
 const createOrder = async (stripeSession, addressId) => {
+    
     const order = new Order({
         user_id: stripeSession.metadata.user_id,
         address_id: addressId,
@@ -49,6 +51,14 @@ const createOrder = async (stripeSession, addressId) => {
     })
 
     await order.save()
+
+    // for (let purchase of JSON.parse(stripeSession.metadata.orders)) {
+    //     console.log('count 1')
+    //     createOrderItem(order.get('id'), purchase.variant_id, purchase.quantity)
+        
+    // }
+
+   
     return order
 }
 
@@ -59,6 +69,7 @@ const createOrderItem = async (orderId, variantId, quantity) => {
         quantity
     })
     await orderItem.save()
+    console.log('count 2')
     return orderItem
 }
 
@@ -104,6 +115,7 @@ const getAddressById = async (id) => {
 
 
 module.exports = {
-    getOrderById, getOrderByUserId, createOrder, deleteOrder, updateOrderStatus, getAllStatus, getAddressById,
-    createOrder, createOrderItem, getOrderItemsByOrderId, getOrderItemsByVariantId, createAddress
+    getOrderById, createOrder, deleteOrder, updateOrderStatus, getAllStatus, getAddressById,
+    createOrder, createOrderItem, getOrderItemsByOrderId, getOrderItemsByVariantId, createAddress,
+    getOrdersByUserId
 }

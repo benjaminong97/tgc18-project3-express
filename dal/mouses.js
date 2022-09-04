@@ -1,5 +1,5 @@
 // import in the mouse model
-const { Mouse, Brand, Variant, Color, Feature, Backlighting, GameType } = require('../models');
+const { Mouse, Brand, Variant, Review, Color, Feature, Backlighting, GameType } = require('../models');
 
 const getAllBrands = async () => {
     return await Brand.fetchAll().map((brand) => {
@@ -28,7 +28,7 @@ const getAllGameTypes = async () => {
 const getAllMouses = async () => {
     return await Mouse.collection().fetch(
         {
-            'withRelated': ['variants', 'features', 'backlighting', 'gameType', 'brand']
+            'withRelated': ['variants', 'features', 'backlighting', 'gameType', 'brand', 'reviews']
         }
     )
 }
