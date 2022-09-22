@@ -111,7 +111,7 @@ router.post('/logout', async (req, res) => {
                 res.json({
                     error: 'Refresh token not found.'
                 })
-                return res.sendStatus(403);
+                
             }
 
             const token = new BlacklistedToken();
