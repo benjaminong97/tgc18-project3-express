@@ -44,9 +44,8 @@ router.post('/login', async (req,res) => {
             'user_first_name': user.get('first_name')
         })
     } else {
-        res.send({
-            'error' : 'Invalid sign in details'
-        })
+        res.status(204)
+        res.send("Wrong email or password")
     }
 })
 
