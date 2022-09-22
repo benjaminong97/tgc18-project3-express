@@ -108,6 +108,9 @@ router.post('/logout', async (req, res) => {
     } else {
             jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET,async (err, user) => {
             if (err) {
+                res.json({
+                    error: 'Refresh token not found.'
+                })
                 return res.sendStatus(403);
             }
 
