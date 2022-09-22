@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const crypto = require('crypto')
 const jwt = require('jsonwebtoken')
-const {checkIfAuthenticatedJWT} = require('../../middlewares')
+const { checkIfAuthenticatedJWT } = require('../../middlewares')
 
 
 
@@ -23,13 +23,13 @@ const getHashedPassword = (password) => {
     return hash;
 }
 
-const {User, BlacklistedToken} = require('../../models')
+const { User, BlacklistedToken } = require('../../models')
 
-router.post('/login', async (req,res) => {
-    
-    
+router.post('/login', async (req, res) => {
+
+
     let user = await User.where({
-        'email' : req.body.email
+        'email': req.body.email
     }).fetch({
         require: false
     })
@@ -38,9 +38,9 @@ router.post('/login', async (req,res) => {
         let accessToken = generateAccessToken(user.toJSON(), process.env.TOKEN_SECRET, '15m')
         let refreshToken = generateAccessToken(user.toJSON(), process.env.REFRESH_TOKEN_SECRET, '7d')
         res.send({
-            accessToken, 
+            accessToken,
             refreshToken,
-            'user_id' : user.get('id'),
+            'user_id': user.get('id'),
             'user_first_name': user.get('first_name')
         })
     } else {
@@ -49,7 +49,7 @@ router.post('/login', async (req,res) => {
     }
 })
 
-router.post('/refresh', async(req,res) => {
+router.post('/refresh', async (req, res) => {
     let refreshToken = req.body.refreshToken
     if (!refreshToken) {
         res.sendStatus(401)
@@ -57,7 +57,7 @@ router.post('/refresh', async(req,res) => {
 
     //check if the refresh token has been black listed 
     let blacklistedToken = await BlacklistedToken.where({
-        'token' : refreshToken
+        'token': refreshToken
     }).fetch({
         require: false
     })
@@ -79,19 +79,19 @@ router.post('/refresh', async(req,res) => {
     })
 })
 
-router.get('/profile', async (req,res) => {
+router.get('/profile', async (req, res) => {
     let user = await User.where({
-        'id' : req.headers.id
+        'id': req.headers.id
     }).fetch({
         require: false
     })
     res.send(user)
 })
 
-router.post('/register', async(req,res) => {
+router.post('/register', async (req, res) => {
     let user = new User({
-        'first_name' : req.body.first_name,
-        'last_name' : req.body.last_name,
+        'first_name': req.body.first_name,
+        'last_name': req.body.last_name,
         'email': req.body.email,
         'password': getHashedPassword(req.body.password)
     })
@@ -106,21 +106,26 @@ router.post('/logout', async (req, res) => {
     if (!refreshToken) {
         res.sendStatus(401);
     } else {
-            jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET,async (err, user) => {
+        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async (err, user) => {
             if (err) {
+
+                res.status(403)
                 res.json({
                     error: 'Refresh token not found.'
                 })
-                
+
+
+            } else {
+                const token = new BlacklistedToken();
+                token.set('token', refreshToken);
+                token.set('date_created', new Date()); // use current date
+                await token.save();
+                res.send({
+                    'message': 'Logged Out'
+                })
             }
 
-            const token = new BlacklistedToken();
-            token.set('token', refreshToken);
-            token.set('date_created', new Date()); // use current date
-            await token.save();
-            res.send({
-                'message': 'Logged Out'
-            })
+
         })
 
     }
